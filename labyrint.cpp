@@ -11,9 +11,11 @@
 
 int main(int argc, char *argv[]) {
 	int velikost = VELIKOST;
-	int pocetHracu = 4;
-	int hracNaTahu = 0;
+	int pocetHracu = 2;
+	//vylosovani zacinajiciho hrace
+	int hracNaTahu = rand() % pocetHracu;
 	int vyhral = 0;
+	bool posunuto = false;
 	string prikaz;
 	string posunuti;
 	HerniPlan plan(velikost);
@@ -33,15 +35,6 @@ int main(int argc, char *argv[]) {
 		if(prikaz == "konec"){
 			break;
 		}
-		//otoci volnym polickem
-		else if(prikaz == "otoc"){
-			plan.otoc();
-		}
-		//preda hru dalsimu hraci
-		else if(prikaz == "dalsi"){
-			if(hracNaTahu == pocetHracu-1) hracNaTahu = 0;
-			else hracNaTahu++; 
-		}
 		//ukaze hraci hledany predmet
 		else if(prikaz == "predmet"){
 			cout << "Na tahu je hrac cislo: " << hracNaTahu+1 << endl;
@@ -50,14 +43,33 @@ int main(int argc, char *argv[]) {
 			else cout << "Hledas: " << plan.herni_predmety(hrac[hracNaTahu].hledany_predmet()) << endl;
 			continue;
 		}
-		//posune hracem
-		else if(prikaz[0] == 'd' || prikaz[0] == 'n' || prikaz[0] == 'p' || prikaz[0] == 'l'){
-			vyhral = plan.pohyb_hrace(prikaz, velikost, &hrac[hracNaTahu], hracNaTahu);
+		
+		if(posunuto == false){
+			//otoci volnym polickem
+			if(prikaz == "otoc"){
+				plan.otoc();
+			}
+			//vlozi policko
+			else if(prikaz.length() == 1){
+				posunuto = plan.posun(prikaz, hrac, pocetHracu);
+				if(posunuto == false) 
+					cout << "Nelze vsunout policko na tohle misto" << endl;
+			}
+			else cout << "Nejprve vloz volne policko" << endl;
 		}
-		//vlozi policko
-		else if(prikaz.length() == 1){
-			plan.posun(prikaz, hrac, pocetHracu);
-		} 
+		else{
+			//preda hru dalsimu hraci
+			if(prikaz == "dalsi"){
+				if(hracNaTahu == pocetHracu-1) hracNaTahu = 0;
+				else hracNaTahu++; 
+				posunuto = false;
+			}
+			//posune hracem
+			else if(prikaz[0] == 'd' || prikaz[0] == 'n' || prikaz[0] == 'p' || prikaz[0] == 'l'){
+				vyhral = plan.pohyb_hrace(prikaz, velikost, &hrac[hracNaTahu], hracNaTahu);
+			}
+			else cout << "Neplatny prikaz" << endl;
+		}
 		cout << "Na tahu je hrac cislo: " << hracNaTahu+1 << endl;
 		plan.vypis(hrac, pocetHracu);
 		if(vyhral > 0) {

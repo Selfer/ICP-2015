@@ -9,6 +9,7 @@ class HerniPlan {
 		Policko volne;
 		string predmety[POCET_PREDMETU];
 		string volnePredmety[POCET_PREDMETU];
+		string vlozenePolicko;
 	public:
 		HerniPlan (int);
 		void inicializace();
@@ -31,7 +32,7 @@ class HerniPlan {
 		//vlozi policko na souradnici a ulozi vysunute
 		void vloz(int, int, Hrac[], int);
 		//posune radu
-		void posun(string, Hrac [], int);
+		bool posun(string, Hrac [], int);
 		//otoci s volnym polickem
 		void otoc();
 };

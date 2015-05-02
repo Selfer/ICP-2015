@@ -8,8 +8,9 @@ HerniPlan::HerniPlan (int vel){
 	inicializace();
 }
 void HerniPlan::inicializace(){
+	vlozenePolicko = "";
 	lPole = 4;
-	tPole = 5;
+	tPole = 0;
 	iPole = 0;
 	//pevna policka
 	mapa[0][0].druh = 0;
@@ -20,22 +21,25 @@ void HerniPlan::inicializace(){
 	mapa[velikost-1][0].otoceni = 0;
 	mapa[velikost-1][velikost-1].druh = 0;
 	mapa[velikost-1][velikost-1].otoceni = 3;
-	
-	mapa[2][0].druh = 1;
-	mapa[2][0].otoceni = 3;
-	mapa[0][2].druh = 1;
-	mapa[0][2].otoceni = 0;
-	mapa[2][2].druh = 1;
-	mapa[2][2].otoceni = 3;
-	mapa[2][velikost-1].druh = 1;
-	mapa[2][velikost-1].otoceni = 1;
-	mapa[velikost-1][2].druh = 1;
-	mapa[velikost-1][2].otoceni = 2;
+
 	//vytvoreni herniho planu
 	int pocet_poli = (velikost*velikost)/3;
 	for(int i = 0; i < velikost; i++){
 		for(int j = 0; j < velikost; j++){
-			if(i % 2 == 0 && j % 2 == 0) continue;
+			//preskoceni rohu
+			if((i == 0 && j == 0) || (i == 0 && j == velikost-1) || 
+				(i == velikost-1 && j == 0) || (i == velikost-1 && j == velikost-1)) continue;
+			//pevna policka
+			if(i % 2 == 0 && j % 2 == 0) {
+				tPole++;
+				mapa[i][j].druh = 1;
+				if(i == 0) mapa[i][j].otoceni = 0;
+				else if(j == 0) mapa[i][j].otoceni = 3;
+				else if(i == velikost-1) mapa[i][j].otoceni = 2;
+				else if(j == velikost-1) mapa[i][j].otoceni = 1;
+				else mapa[i][j].otoceni = rand() % 3;
+				continue;
+			}
 			int nahoda;
 			while(1){
 				nahoda = rand() % 3;
@@ -400,9 +404,9 @@ void HerniPlan::vypis_policko(Policko mapa, int cast, int postava, int zacatek){
 void HerniPlan::popisek(int radek, int cast, bool zacatek){
 	if(radek == 0 && cast == 0 && zacatek == true){
 		if(velikost >= 5) cout << "\t\t" << "   A\t\t   B";
-		if(velikost >= 7) cout << "\t   C";
-		if(velikost >= 9) cout << "\t   D";
-		if(velikost >= 11) cout << "\t   E"; 
+		if(velikost >= 7) cout << "\t\t   C";
+		if(velikost >= 9) cout << "\t\t   D";
+		if(velikost >= 11) cout << "\t\t   E"; 
 		cout << endl;
 	}
 	if(cast == 1){
@@ -460,11 +464,13 @@ void HerniPlan::vypis(Hrac hrac[], int pocetHracu){
 			//vypise herni stav
 			if(i == 0 && cast == 0){
 				cout << "\x1B[31mHrac 1:\x1B[0m " << hrac[0].pocet_bodu() << " bodu";
-				cout << "\t" << "\x1B[36mHrac 3:\x1B[0m " << hrac[2].pocet_bodu() << " bodu";
+				if(pocetHracu > 2)
+					cout << "\t" << "\x1B[36mHrac 3:\x1B[0m " << hrac[2].pocet_bodu() << " bodu";
 			}
 			if(i == 0 && cast == 1){
 				cout << "\x1B[32mHrac 2:\x1B[0m " << hrac[1].pocet_bodu() << " bodu";
-				cout << "\t" << "\x1B[33mHrac 4:\x1B[0m " << hrac[3].pocet_bodu() << " bodu";
+				if(pocetHracu > 3)
+					cout << "\t" << "\x1B[33mHrac 4:\x1B[0m " << hrac[3].pocet_bodu() << " bodu";
 			}
 			//vypise volne policko
 			if(i == 1){
@@ -476,9 +482,9 @@ void HerniPlan::vypis(Hrac hrac[], int pocetHracu){
 		cout << endl;
 		if(i + 1 == velikost){
 			if(velikost >= 5) cout << "\t\t" << "   S\t\t   R";
-			if(velikost >= 7) cout << "\t   Q";
-			if(velikost >= 9) cout << "\t   P";
-			if(velikost >= 11) cout << "\t   O"; 
+			if(velikost >= 7) cout << "\t\t   Q";
+			if(velikost >= 9) cout << "\t\t   P";
+			if(velikost >= 11) cout << "\t\t   O"; 
 			cout << endl;
 		}
 	}
@@ -544,19 +550,35 @@ void HerniPlan::vloz(int x, int y, Hrac hrac[], int pocetHracu){
 	}
 }
 //posune radu
-void HerniPlan::posun(string symbol, Hrac hrac[], int pocetHracu){
-	if(symbol == "A") vloz(0,1,hrac,pocetHracu);
-	else if(symbol == "B") vloz(0,3,hrac,pocetHracu);
+bool HerniPlan::posun(string symbol, Hrac hrac[], int pocetHracu){
+	if(symbol == "A" && vlozenePolicko != "S") vloz(0,1,hrac,pocetHracu);
+	else if(symbol == "B" && vlozenePolicko != "R") vloz(0,3,hrac,pocetHracu);
+	else if(velikost >= 7 && symbol == "C" && vlozenePolicko != "Q") vloz(0,5,hrac,pocetHracu);
+	else if(velikost >= 9 && symbol == "D" && vlozenePolicko != "P") vloz(0,7,hrac,pocetHracu);
+	else if(velikost >= 11 && symbol == "E" && vlozenePolicko != "O") vloz(0,9,hrac,pocetHracu);
 	
-	else if(symbol == "I") vloz(1,velikost-1,hrac,pocetHracu);
-	else if(symbol == "J") vloz(3,velikost-1,hrac,pocetHracu);
+	else if(symbol == "I" && vlozenePolicko != "Y") vloz(1,velikost-1,hrac,pocetHracu);
+	else if(symbol == "J" && vlozenePolicko != "X") vloz(3,velikost-1,hrac,pocetHracu);
+	else if(velikost >= 7 && symbol == "K" && vlozenePolicko != "W") vloz(5,velikost-1,hrac,pocetHracu);
+	else if(velikost >= 9 && symbol == "L" && vlozenePolicko != "V") vloz(7,velikost-1,hrac,pocetHracu);
+	else if(velikost >= 11 && symbol == "M" && vlozenePolicko != "U") vloz(9,velikost-1,hrac,pocetHracu);
 	
-	else if(symbol == "R") vloz(velikost-1,3,hrac,pocetHracu);
-	else if(symbol == "S") vloz(velikost-1,1,hrac,pocetHracu);
+	else if(velikost >= 11 && symbol == "O" && vlozenePolicko != "E") vloz(velikost-1,9,hrac,pocetHracu);
+	else if(velikost >= 9 && symbol == "P" && vlozenePolicko != "D") vloz(velikost-1,7,hrac,pocetHracu);
+	else if(velikost >= 7 && symbol == "Q" && vlozenePolicko != "C") vloz(velikost-1,5,hrac,pocetHracu);
+	else if(symbol == "R" && vlozenePolicko != "B") vloz(velikost-1,3,hrac,pocetHracu);
+	else if(symbol == "S" && vlozenePolicko != "A") vloz(velikost-1,1,hrac,pocetHracu);
 	
-	else if(symbol == "X") vloz(3,0,hrac,pocetHracu);
-	else if(symbol == "Y") vloz(1,0,hrac,pocetHracu);
-	else cout << "Prikaz neodpovida" << endl; 
+	else if(velikost >= 11 && symbol == "U" && vlozenePolicko != "M") vloz(9,0,hrac,pocetHracu);
+	else if(velikost >= 9 && symbol == "V" && vlozenePolicko != "L") vloz(7,0,hrac,pocetHracu);
+	else if(velikost >= 7 && symbol == "W" && vlozenePolicko != "K") vloz(5,0,hrac,pocetHracu);
+	else if(symbol == "X" && vlozenePolicko != "J") vloz(3,0,hrac,pocetHracu);
+	else if(symbol == "Y" && vlozenePolicko != "I") vloz(1,0,hrac,pocetHracu);
+	else {
+		return false;
+	}
+	vlozenePolicko = symbol;
+	return true;
 }
 //otoci s volnym polickem
 void HerniPlan::otoc(){
