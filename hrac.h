@@ -16,6 +16,8 @@ class Hrac {
 		void nastav_konec();
 		//prida bod po nalezenem predmetu
 		void pridej_bod();
+		//ubere bod v pripade zmeny zpet
+		void uber_bod();
 		//vrati pozici hrace
 		void vrat_pozici(int *, int *);
 		//pohne s hracem

@@ -8,7 +8,7 @@ HerniPlan::HerniPlan (int vel){
 	inicializace();
 }
 void HerniPlan::inicializace(){
-	vlozenePolicko = "";
+	vlozenePolicko = "F";
 	lPole = 4;
 	tPole = 0;
 	iPole = 0;
@@ -189,7 +189,7 @@ void HerniPlan::vykresli_stred(int postava, int predmet, int zacatek){
 	}
 }
 //posune hrace
-int HerniPlan::pohyb_hrace(string prikaz, int velikost, Hrac *hrac, int cisloHrace){
+int HerniPlan::pohyb_hrace(string prikaz, int velikost, Hrac *hrac, int cisloHrace, stack<string> *historie){
 	string pocet = prikaz.substr(1,prikaz.length()-1);
 	//kontrola, zda je pocet kroku cislo
 	for(unsigned int i = 0; i < pocet.length(); i++) {
@@ -225,6 +225,7 @@ int HerniPlan::pohyb_hrace(string prikaz, int velikost, Hrac *hrac, int cisloHra
 				(mapa[radek+1][sloupec].druh == 2 && mapa[radek+1][sloupec].otoceni == 3)) break; 
 			hrac->pohyb(prikaz[0], velikost, false);
 			radek++;
+			historie->push("n1");
 		}
 		//krok nahoru
 		else if(prikaz[0] == 'n'){
@@ -243,6 +244,7 @@ int HerniPlan::pohyb_hrace(string prikaz, int velikost, Hrac *hrac, int cisloHra
 				(mapa[radek-1][sloupec].druh == 2 && mapa[radek-1][sloupec].otoceni == 3)) break; 
 			hrac->pohyb(prikaz[0], velikost, false);
 			radek--;
+			historie->push("d1");
 		}
 		//krok vpravo
 		else if(prikaz[0] == 'p'){
@@ -261,6 +263,7 @@ int HerniPlan::pohyb_hrace(string prikaz, int velikost, Hrac *hrac, int cisloHra
 				(mapa[radek][sloupec+1].druh == 2 && mapa[radek][sloupec+1].otoceni == 2)) break; 
 			hrac->pohyb(prikaz[0], velikost, false);
 			sloupec++;
+			historie->push("l1");
 		}
 		//krok vlevo
 		else if(prikaz[0] == 'l'){
@@ -279,14 +282,25 @@ int HerniPlan::pohyb_hrace(string prikaz, int velikost, Hrac *hrac, int cisloHra
 				(mapa[radek][sloupec-1].druh == 2 && mapa[radek][sloupec-1].otoceni == 2)) break; 
 			hrac->pohyb(prikaz[0], velikost, false);
 			sloupec--;
+			historie->push("p1");
 		}
 		if(mapa[radek][sloupec].predmet == hrac->hledany_predmet()){
 			hrac->pridej_bod();
+			//umisteni identifikatoru pohybu na vrsek
+			string vrsek = historie->top();
+			historie->pop();
+			//ulozeni cisla predmetu na zasobnik
+			char intStr[2];
+			sprintf(intStr, "%i", mapa[radek][sloupec].predmet);
+			historie->push(string(intStr));
 			mapa[radek][sloupec].predmet = NIC;
 			if(hrac->pocet_bodu() == POCET_BODU){
 				hrac->nastav_konec();
 			}
 			else prirad_predmet(hrac);
+			
+			historie->push("bod");
+			historie->push(vrsek);
 		}
 		else if(hrac->hledany_predmet() == KONEC){
 			if(cisloHrace == 0 && radek == 0 && sloupec == 0) return 1;
@@ -577,11 +591,33 @@ bool HerniPlan::posun(string symbol, Hrac hrac[], int pocetHracu){
 	else {
 		return false;
 	}
-	vlozenePolicko = symbol;
+	vlozenePolicko = "F";
 	return true;
 }
 //otoci s volnym polickem
 void HerniPlan::otoc(){
 	if(volne.otoceni == 3) volne.otoceni = 0;
 	else volne.otoceni++; 
+}
+//otoci s volnym polickem zpet
+void HerniPlan::otoc_zpet(){
+	if(volne.otoceni == 0) volne.otoceni = 3;
+	else volne.otoceni--; 
+}
+//vrati posledni provedene vlozeni policka
+string HerniPlan::vlozene_policko(){
+	return vlozenePolicko;
+}
+//pro vraceni vlozeneho policka se musi nastavit vlozenePolicko
+void HerniPlan::nastav_vlozene_policko(string policko){
+	vlozenePolicko = policko;
+}
+//vrati hracem vzaty predmet zpet do hry a vrati hru do stavu pred sebranim tohoto predmetu
+void HerniPlan::vrat_predmet_zpet(int x, int y, string predmet, Hrac *hrac){
+	int iPredmet = atoi(predmet.c_str());
+	volnePredmety[hrac->hledany_predmet()] = herni_predmety(hrac->hledany_predmet());
+	mapa[x][y].predmet = iPredmet;
+	volnePredmety[iPredmet] = iPredmet;
+	hrac->nastav_predmet(iPredmet);
+	for(int i = 0; i < 20; i++) cout << i << predmety[i] << "\t" << volnePredmety[i] << endl;
 }

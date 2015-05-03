@@ -7,6 +7,8 @@
 #include <time.h>
 #include <unistd.h>
 #include <iostream>
+#include <string>
+#include <stack>
 #define VELIKOST 5
 #define POCET_PREDMETU 20
 #define POCET_BODU 5

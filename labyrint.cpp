@@ -20,6 +20,7 @@ int main(int argc, char *argv[]) {
 	string posunuti;
 	HerniPlan plan(velikost);
 	Hrac hrac[pocetHracu];
+	stack<string> historie;
 	for(int i = 0; i < pocetHracu; i++){
 		hrac[i].inicializace(i, velikost);
 		plan.prirad_predmet(&hrac[i]);
@@ -43,17 +44,97 @@ int main(int argc, char *argv[]) {
 			else cout << "Hledas: " << plan.herni_predmety(hrac[hracNaTahu].hledany_predmet()) << endl;
 			continue;
 		}
-		
+		//vrati hru o krok zpet
+		else if(prikaz == "zpet"){
+			if(historie.empty() == true){
+				cout << "Nelze vratit krok zpet" << endl;
+				cout << "Na tahu je hrac cislo: " << hracNaTahu+1 << endl;
+				plan.vypis(hrac, pocetHracu);
+				continue;
+			}
+			//vraceni hry predchozimu hraci
+			else if(historie.top() == "dalsi"){
+				if(hracNaTahu == 0) hracNaTahu = pocetHracu-1;
+				else hracNaTahu--; 
+				posunuto = true;
+			}
+			//otoceni zpet
+			else if(historie.top() == "otoc"){
+				plan.otoc_zpet();
+			}
+			//vraceni pohybu
+			else if(historie.top() == "d1" || historie.top() == "n1" || historie.top() == "p1" || historie.top() == "l1"){
+				int radek;
+				int sloupec;
+				hrac[hracNaTahu].vrat_pozici(&radek,&sloupec);
+				plan.pohyb_hrace(historie.top(), velikost, &hrac[hracNaTahu], hracNaTahu, &historie);
+				historie.pop();
+				historie.pop();
+				//ziskal-li hrac bod, je potreba pri kroku zpet ho odebrat a vratit predmet zpet
+				if(historie.top() == "bod") {
+					hrac[hracNaTahu].uber_bod();
+					historie.pop();
+					plan.vrat_predmet_zpet(radek, sloupec, historie.top(), &hrac[hracNaTahu]);
+					historie.pop();
+				}
+				cout << "Na tahu je hrac cislo: " << hracNaTahu+1 << endl;
+				plan.vypis(hrac, pocetHracu);
+				continue;
+			}
+			//vsunuti zpet vysunuteho policka
+			else if(historie.top().length() == 1){
+				string vPolicko = historie.top();
+				//nastavime hodnotu posledniho posuvu na hodnotu, ktera nebude ovlivnovat zmenu zpet 
+				plan.nastav_vlozene_policko("F");
+				historie.pop();
+				//vlozeni volneho policka z druhe strany
+				if(historie.top() == "A") plan.posun("S", hrac, pocetHracu);
+				else if(historie.top() == "B") plan.posun("R", hrac, pocetHracu);
+				else if(historie.top() == "C") plan.posun("Q", hrac, pocetHracu);
+				else if(historie.top() == "D") plan.posun("P", hrac, pocetHracu);
+				else if(historie.top() == "E") plan.posun("O", hrac, pocetHracu);
+				else if(historie.top() == "I") plan.posun("Y", hrac, pocetHracu);
+				else if(historie.top() == "J") plan.posun("X", hrac, pocetHracu);
+				else if(historie.top() == "K") plan.posun("W", hrac, pocetHracu);
+				else if(historie.top() == "L") plan.posun("V", hrac, pocetHracu);
+				else if(historie.top() == "M") plan.posun("U", hrac, pocetHracu);
+				
+				else if(historie.top() == "O") plan.posun("E", hrac, pocetHracu);
+				else if(historie.top() == "P") plan.posun("D", hrac, pocetHracu);
+				else if(historie.top() == "Q") plan.posun("C", hrac, pocetHracu);
+				else if(historie.top() == "R") plan.posun("B", hrac, pocetHracu);
+				else if(historie.top() == "S") plan.posun("A", hrac, pocetHracu);
+				else if(historie.top() == "U") plan.posun("M", hrac, pocetHracu);
+				else if(historie.top() == "V") plan.posun("L", hrac, pocetHracu);
+				else if(historie.top() == "W") plan.posun("K", hrac, pocetHracu);
+				else if(historie.top() == "X") plan.posun("J", hrac, pocetHracu);
+				else if(historie.top() == "Y") plan.posun("I", hrac, pocetHracu);
+				posunuto = false;
+				//nastaveni omezeni pro vlozeni policka, ktere by vratilo tah spoluhrace
+				plan.nastav_vlozene_policko(vPolicko);
+			}
+			historie.pop();
+			cout << "Na tahu je hrac cislo: " << hracNaTahu+1 << endl;
+			plan.vypis(hrac, pocetHracu);
+			continue;
+		}
 		if(posunuto == false){
 			//otoci volnym polickem
 			if(prikaz == "otoc"){
 				plan.otoc();
+				historie.push("otoc");
 			}
 			//vlozi policko
 			else if(prikaz.length() == 1){
+				string vPolicko = plan.vlozene_policko();
 				posunuto = plan.posun(prikaz, hrac, pocetHracu);
-				if(posunuto == false) 
+				if(posunuto == false) {
 					cout << "Nelze vsunout policko na tohle misto" << endl;
+				}
+				else {
+					historie.push(prikaz);
+					historie.push(vPolicko);
+				}
 			}
 			else cout << "Nejprve vloz volne policko" << endl;
 		}
@@ -63,10 +144,11 @@ int main(int argc, char *argv[]) {
 				if(hracNaTahu == pocetHracu-1) hracNaTahu = 0;
 				else hracNaTahu++; 
 				posunuto = false;
+				historie.push("dalsi");
 			}
 			//posune hracem
 			else if(prikaz[0] == 'd' || prikaz[0] == 'n' || prikaz[0] == 'p' || prikaz[0] == 'l'){
-				vyhral = plan.pohyb_hrace(prikaz, velikost, &hrac[hracNaTahu], hracNaTahu);
+				vyhral = plan.pohyb_hrace(prikaz, velikost, &hrac[hracNaTahu], hracNaTahu, &historie);
 			}
 			else cout << "Neplatny prikaz" << endl;
 		}

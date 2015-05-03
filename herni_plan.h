@@ -20,7 +20,7 @@ class HerniPlan {
 		//vykresli stredove policko kazde casti, kde muze byt i postava hrace nebo predmet
 		void vykresli_stred(int, int, int);
 		//posune hrace
-		int pohyb_hrace(string, int, Hrac *, int);
+		int pohyb_hrace(string, int, Hrac *, int, stack<string> *);
 		//vypise cast policka podle jeho druhu a natoceni
 		void vypis_policko(Policko, int, int, int);
 		//vypise popisek k mape
@@ -35,4 +35,12 @@ class HerniPlan {
 		bool posun(string, Hrac [], int);
 		//otoci s volnym polickem
 		void otoc();
+		//otoci s volnym polickem zpet
+		void otoc_zpet();
+		//vrati posledni provedene vlozeni policka
+		string vlozene_policko();
+		//pro vraceni vlozeneho policka se musi nastavit vlozenePolicko
+		void nastav_vlozene_policko(string);
+		//vrati hracem vzaty predmet zpet do hry a vrati hru do stavu pred sebranim tohoto predmetu
+		void vrat_predmet_zpet(int, int, string, Hrac *);
 };

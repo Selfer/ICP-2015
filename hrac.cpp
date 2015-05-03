@@ -44,6 +44,10 @@ void Hrac::nastav_konec(){
 void Hrac::pridej_bod(){
 	body++;
 }
+//ubere bod v pripade zmeny zpet
+void Hrac::uber_bod(){
+	body--;
+}
 //vrati pozici hrace
 void Hrac::vrat_pozici(int *radek, int *sloupec){
 	*radek = x;
