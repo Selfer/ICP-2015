@@ -11,14 +11,15 @@
 
 int main(int argc, char *argv[]) {
 	int velikost = VELIKOST;
-	int pocetHracu = 2;
+	int pocetHracu = 4;
 	//vylosovani zacinajiciho hrace
 	int hracNaTahu = rand() % pocetHracu;
 	int vyhral = 0;
 	bool posunuto = false;
 	string prikaz;
 	string posunuti;
-	HerniPlan plan(velikost);
+	HerniPlan plan;
+	plan.inicializace(velikost);
 	Hrac hrac[pocetHracu];
 	stack<string> historie;
 	for(int i = 0; i < pocetHracu; i++){
@@ -42,6 +43,52 @@ int main(int argc, char *argv[]) {
 			plan.vypis(hrac, pocetHracu);
 			if(hrac[hracNaTahu].hledany_predmet() == -2) cout << "Vrat se na zacatek" << endl;
 			else cout << "Hledas: " << plan.herni_predmety(hrac[hracNaTahu].hledany_predmet()) << endl;
+			continue;
+		}
+		//ulozi hru
+		else if(prikaz == "uloz"){
+			ofstream soubor;
+			soubor.open("ulozena_hra.txt", ios::out);
+			soubor << pocetHracu << endl << hracNaTahu << endl;
+			for(int i = 0; i < pocetHracu; i++){
+				hrac[i].uloz(&soubor);
+			}
+			plan.uloz(&soubor);
+			soubor.close();
+		}
+		else if(prikaz == "nacti"){
+			ifstream soubor;
+			soubor.open("ulozena_hra.txt", ios::in);
+			soubor >> pocetHracu >> hracNaTahu;
+			//nastaveni hracu
+			for(int i = 0; i < pocetHracu; i++){
+				int x,y,predmet,body;
+				soubor >> x >> y >> predmet >> body;
+				hrac[i].inicializace_ulozena(x,y,predmet,body);
+			}
+			int vel;
+			string vlPolicko;
+			soubor >> vel >> vlPolicko;
+			//nastaveni velikosti a volneho policka
+			plan.inicializace_ulozena(vel);
+			plan.nastav_vlozene_policko(vlPolicko);
+			int druh,otoceni,predmet;
+			//nastaveni kazdeho policka
+			for(int i = 0; i < vel; i++){
+				for(int j = 0; j < vel; j++){
+					soubor >> druh >> otoceni >> predmet;
+					plan.nastav_policko(i,j,druh,otoceni,predmet);
+				}
+			}
+			soubor >> druh >> otoceni >> predmet;
+			plan.nastav_volne_policko(druh,otoceni,predmet);
+			string policko, volnePolicko;
+			//nastaveni predmetu na jednotlive indexy
+			for(int i = 0; i < POCET_PREDMETU; i++){
+				soubor >> policko >> volnePolicko;
+				plan.nastav_predmet(i, policko, volnePolicko);
+			}
+			soubor.close();
 			continue;
 		}
 		//vrati hru o krok zpet

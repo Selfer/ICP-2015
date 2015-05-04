@@ -11,8 +11,14 @@ class HerniPlan {
 		string volnePredmety[POCET_PREDMETU];
 		string vlozenePolicko;
 	public:
-		HerniPlan (int);
-		void inicializace();
+		void inicializace(int);
+		void inicializace_ulozena(int);
+		//nastaveni policka
+		void nastav_policko(int, int, int, int, int);
+		//nastaveni volneho policka
+		void nastav_volne_policko(int, int, int);
+		//nastaveni predmetu
+		void nastav_predmet(int, string, string);
 		//priradi predmet hraci
 		void prirad_predmet(Hrac *);
 		//vrati predmet podle cisla (indexu)
@@ -43,4 +49,6 @@ class HerniPlan {
 		void nastav_vlozene_policko(string);
 		//vrati hracem vzaty predmet zpet do hry a vrati hru do stavu pred sebranim tohoto predmetu
 		void vrat_predmet_zpet(int, int, string, Hrac *);
+		//ulozi herni plan do souboru
+		void uloz(ofstream *);
 };

@@ -6,6 +6,8 @@ class Hrac {
 		int body;
 	public:
 		void inicializace(int, int);
+		//nastavi hodnoty hrace
+		void inicializace_ulozena(int, int, int, int);
 		//vrati pocet bodu
 		int pocet_bodu();
 		//vrati cislo hledaneho predmetu
@@ -24,5 +26,7 @@ class Hrac {
 		void pohyb(char, int, bool);
 		//zjisti, zda je na policku postava
 		bool je_postava(int, int);
+		//ulozi hrace do souboru
+		void uloz(ofstream *);
   
 };

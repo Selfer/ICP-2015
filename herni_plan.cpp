@@ -2,12 +2,8 @@
 #include "hrac.h"
 #include "herni_plan.h"
 
-//definice herniho planu
-HerniPlan::HerniPlan (int vel){
+void HerniPlan::inicializace(int vel){
 	velikost = vel;
-	inicializace();
-}
-void HerniPlan::inicializace(){
 	vlozenePolicko = "F";
 	lPole = 4;
 	tPole = 0;
@@ -92,6 +88,27 @@ void HerniPlan::inicializace(){
 		else mapa[radek][sloupec].predmet = i;
 		i++;
 	}
+}
+//nastaveni velikosti
+void HerniPlan::inicializace_ulozena(int vel){
+	velikost = vel;
+}
+//nastaveni policka
+void HerniPlan::nastav_policko(int x, int y, int druh, int otoceni, int predmet){
+	mapa[x][y].druh = druh;
+	mapa[x][y].otoceni = otoceni;
+	mapa[x][y].predmet = predmet;
+}
+//nastaveni volneho policka
+void HerniPlan::nastav_volne_policko(int druh, int otoceni, int predmet){
+	volne.druh = druh;
+	volne.otoceni = otoceni;
+	volne.predmet = predmet;
+}
+//nastaveni predmetu
+void HerniPlan::nastav_predmet(int i, string predmet, string volnyPredmet){
+	predmety[i] = predmet;
+	volnePredmety[i] = volnyPredmet;
 }
 //priradi predmet hraci
 void HerniPlan::prirad_predmet(Hrac *hrac){
@@ -620,4 +637,18 @@ void HerniPlan::vrat_predmet_zpet(int x, int y, string predmet, Hrac *hrac){
 	volnePredmety[iPredmet] = iPredmet;
 	hrac->nastav_predmet(iPredmet);
 	for(int i = 0; i < 20; i++) cout << i << predmety[i] << "\t" << volnePredmety[i] << endl;
+}
+//ulozi herni plan do souboru
+void HerniPlan::uloz(ofstream *soubor){
+	*soubor << velikost << endl << vlozenePolicko << endl;
+	for(int i = 0; i < velikost; i++){
+		for(int j = 0; j < velikost; j++){
+			*soubor << mapa[i][j].druh << endl << mapa[i][j].otoceni << endl << mapa[i][j].predmet << endl;
+		}
+	}
+	*soubor << volne.druh << endl << volne.otoceni << endl << volne.predmet << endl;
+	//ulozeni predmetu
+	for(int i = 0; i < POCET_PREDMETU; i++){
+		*soubor << predmety[i] << endl << volnePredmety[i] << endl;
+	}
 }

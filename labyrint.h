@@ -7,6 +7,7 @@
 #include <time.h>
 #include <unistd.h>
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <stack>
 #define VELIKOST 5

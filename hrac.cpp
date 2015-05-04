@@ -1,5 +1,5 @@
-#include "hrac.h"
 #include "labyrint.h"
+#include "hrac.h"
 //definice hrace
 void Hrac::inicializace(int cisloHrace, int velikost){
 	switch(cisloHrace){
@@ -23,6 +23,13 @@ void Hrac::inicializace(int cisloHrace, int velikost){
 			cerr << "CHYBA" << endl;
 	}
 	body = 0;
+}
+//nastavi hodnoty hrace
+void Hrac::inicializace_ulozena(int pozicex, int pozicey, int spredmet, int sbody){
+	x = pozicex;
+	y = pozicey;
+	predmet = spredmet;
+	body = sbody;
 }
 //vrati pocet bodu
 int Hrac::pocet_bodu(){
@@ -76,4 +83,8 @@ void Hrac::pohyb(char prikaz, int velikost, bool presah){
 bool Hrac::je_postava(int r, int s){
 	if(x == r && y == s) return true;
 	else return false;
+}
+//ulozi hrace do souboru
+void Hrac::uloz(ofstream *soubor){
+	*soubor << x << endl << y << endl << predmet << endl << body << endl;
 }
