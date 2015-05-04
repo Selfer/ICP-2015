@@ -45,17 +45,6 @@ int main(int argc, char *argv[]) {
 			else cout << "Hledas: " << plan.herni_predmety(hrac[hracNaTahu].hledany_predmet()) << endl;
 			continue;
 		}
-		//ulozi hru
-		else if(prikaz == "uloz"){
-			ofstream soubor;
-			soubor.open("ulozena_hra.txt", ios::out);
-			soubor << pocetHracu << endl << hracNaTahu << endl;
-			for(int i = 0; i < pocetHracu; i++){
-				hrac[i].uloz(&soubor);
-			}
-			plan.uloz(&soubor);
-			soubor.close();
-		}
 		else if(prikaz == "nacti"){
 			ifstream soubor;
 			soubor.open("ulozena_hra.txt", ios::in);
@@ -89,6 +78,8 @@ int main(int argc, char *argv[]) {
 				plan.nastav_predmet(i, policko, volnePolicko);
 			}
 			soubor.close();
+			cout << "Na tahu je hrac cislo: " << hracNaTahu+1 << endl;
+			plan.vypis(hrac, pocetHracu);
 			continue;
 		}
 		//vrati hru o krok zpet
@@ -171,6 +162,17 @@ int main(int argc, char *argv[]) {
 				plan.otoc();
 				historie.push("otoc");
 			}
+			//ulozi hru
+			else if(prikaz == "uloz"){
+				ofstream soubor;
+				soubor.open("ulozena_hra.txt", ios::out);
+				soubor << pocetHracu << endl << hracNaTahu << endl;
+				for(int i = 0; i < pocetHracu; i++){
+					hrac[i].uloz(&soubor);
+				}
+				plan.uloz(&soubor);
+				soubor.close();
+			}
 			//vlozi policko
 			else if(prikaz.length() == 1){
 				string vPolicko = plan.vlozene_policko();
@@ -192,6 +194,10 @@ int main(int argc, char *argv[]) {
 				else hracNaTahu++; 
 				posunuto = false;
 				historie.push("dalsi");
+			}
+			//ulozi hru
+			else if(prikaz == "uloz"){
+				cout << "Hru lze ulozit jen na zacatku tahu" << endl;
 			}
 			//posune hracem
 			else if(prikaz[0] == 'd' || prikaz[0] == 'n' || prikaz[0] == 'p' || prikaz[0] == 'l'){

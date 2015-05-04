@@ -608,7 +608,7 @@ bool HerniPlan::posun(string symbol, Hrac hrac[], int pocetHracu){
 	else {
 		return false;
 	}
-	vlozenePolicko = "F";
+	vlozenePolicko = symbol;
 	return true;
 }
 //otoci s volnym polickem
