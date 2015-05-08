@@ -1,0 +1,31 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>icesta.jpg</file>
+        <file>lcesta.jpg</file>
+        <file>tcesta.jpg</file>
+        <file>hrac.png</file>
+        <file>pozadi.jpg</file>
+    </qresource>
+    <qresource prefix="/predmety">
+        <file>predmety/p0.png</file>
+        <file>predmety/p3.png</file>
+        <file>predmety/p4.png</file>
+        <file>predmety/p5.png</file>
+        <file>predmety/p6.png</file>
+        <file>predmety/p7.png</file>
+        <file>predmety/p8.png</file>
+        <file>predmety/p9.png</file>
+        <file>predmety/p10.png</file>
+        <file>predmety/p11.png</file>
+        <file>predmety/p12.png</file>
+        <file>predmety/p13.png</file>
+        <file>predmety/p14.png</file>
+        <file>predmety/p15.png</file>
+        <file>predmety/p16.png</file>
+        <file>predmety/p17.png</file>
+        <file>predmety/p18.png</file>
+        <file>predmety/p19.png</file>
+        <file>predmety/p1.png</file>
+        <file>predmety/p2.png</file>
+    </qresource>
+</RCC>

@@ -644,3 +644,19 @@ void HerniPlan::uloz(ofstream *soubor){
 		*soubor << predmety[i] << endl << volnePredmety[i] << endl;
 	}
 }
+//vrati druh policka
+int HerniPlan::vrat_druh(int x, int y){
+    if(x < 0 && y < 0) return volne.druh;
+    return mapa[x][y].druh;
+}
+
+//vrati otoceni policka
+int HerniPlan::vrat_otoceni(int x, int y){
+    if(x < 0 && y < 0) return volne.otoceni;
+    return mapa[x][y].otoceni;
+}
+//vrati predmet na policku
+int HerniPlan::vrat_predmet(int x, int y){
+    if(x < 0 && y < 0) return volne.predmet;
+    return mapa[x][y].predmet;
+}

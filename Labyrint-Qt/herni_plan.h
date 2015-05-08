@@ -52,4 +52,10 @@ class HerniPlan {
 		void vrat_predmet_zpet(int, int, string, Hrac *);
 		//ulozi herni plan do souboru
 		void uloz(ofstream *);
+        //vrati druh policka
+        int vrat_druh(int, int);
+        //vrati otoceni policka
+        int vrat_otoceni(int, int);
+        //vrati predmet na policku
+        int vrat_predmet(int, int);
 };

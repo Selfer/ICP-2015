@@ -30,7 +30,7 @@ printf("Hra labyrint\n"
 "\tkonec - vypne hru\n"
 );
 }
-
+/*
 int main(int argc, char *argv[]) {
 	int velikost;
 	int pocetHracu;
@@ -272,3 +272,4 @@ int main(int argc, char *argv[]) {
 	}
 	return 0;
 }
+*/
