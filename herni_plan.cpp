@@ -1,7 +1,16 @@
+/**
+*\author xkondr01 xkucha20
+* @file herni_plan.cpp
+* @brief Definice herniho planu a funkci s nim spojenych
+*/
 #include "labyrint.h"
 #include "hrac.h"
 #include "herni_plan.h"
 
+/**
+* Inicializace herniho planu
+* @param vel velikost herniho planu(int)
+*/
 void HerniPlan::inicializace(int vel){
 	velikost = vel;
 	vlozenePolicko = "F";
@@ -94,7 +103,10 @@ void HerniPlan::inicializace(int vel){
 		i++;
 	}
 }
-//nastaveni velikosti
+/**
+* Inicializace ulozeneho herniho planu
+* @param vel velikost herniho planu(int)
+*/
 void HerniPlan::inicializace_ulozena(int vel){
 	velikost = vel;
 	/*mapa = (Policko**)malloc(velikost * sizeof(Policko*));
@@ -102,24 +114,44 @@ void HerniPlan::inicializace_ulozena(int vel){
 		mapa[r] = (Policko*)malloc(velikost * sizeof(Policko));
 	}*/
 }
-//nastaveni policka
+/**
+* Nastavi druh, otoceni a predmet policka
+* @param x radek herniho planu(int)
+* @param y sloupec herniho planu (int)
+* @param druh druh policka(int)
+* @param otoceni otoceni policka(int)
+* @param predmet predmet na policku (int)
+*/
 void HerniPlan::nastav_policko(int x, int y, int druh, int otoceni, int predmet){
 	mapa[x][y].druh = druh;
 	mapa[x][y].otoceni = otoceni;
 	mapa[x][y].predmet = predmet;
 }
-//nastaveni volneho policka
+/**
+* Nastavi druh, otoceni a predmet volneho policka
+* @param druh druh policka(int)
+* @param otoceni otoceni policka(int)
+* @param predmet predmet na policku (int)
+*/
 void HerniPlan::nastav_volne_policko(int druh, int otoceni, int predmet){
 	volne.druh = druh;
 	volne.otoceni = otoceni;
 	volne.predmet = predmet;
 }
-//nastaveni predmetu
+/**
+* Nastavi predmet ziskany z ulozene hry do pole predmetu
+* @param i index(int)
+* @param predmet predmet, ktery se ma nastavit na index pole predmety(string)
+* @param volnyPredmet predmet, ktery se ma nastavit na index pole volnePredmety(string)
+*/
 void HerniPlan::nastav_predmet(int i, string predmet, string volnyPredmet){
 	predmety[i] = predmet;
 	volnePredmety[i] = volnyPredmet;
 }
-//priradi predmet hraci
+/**
+* Prirazeni nahodneho predmetu hraci
+* @param hrac hrac, kteremu se predmet nastavi(Hrac *)
+*/
 void HerniPlan::prirad_predmet(Hrac *hrac){
 	int nahoda;
 	while(1){
@@ -132,7 +164,11 @@ void HerniPlan::prirad_predmet(Hrac *hrac){
 		
 	}
 }
-//vrati predmet podle cisla (indexu)
+/**
+* Ulozene herni predmety v unicode
+* @param cislo cislo predmetu(int)
+* @return  unicode reprezentace znaku (string)
+*/
 string HerniPlan::herni_predmety(int cislo){
 	switch (cislo){
 		case 0:
@@ -179,7 +215,12 @@ string HerniPlan::herni_predmety(int cislo){
 			return "CHYBA";
 	}
 }
-//vykresli stredove policko kazde casti, kde muze byt i postava hrace nebo predmet
+/**
+* Vykresleni stredu policka
+* @param postava cislo hrace na policku(int)
+* @param predmet predmet na policku(int)
+* @param zacatek cislo hrace, ktery na policku startoval(int)
+*/
 void HerniPlan::vykresli_stred(int postava, int predmet, int zacatek){
 	switch(postava){
 		case 0:
@@ -214,7 +255,15 @@ void HerniPlan::vykresli_stred(int postava, int predmet, int zacatek){
 		else cout << "\u2591";
 	}
 }
-//posune hrace
+/**
+* Posune hracem o jedno pole
+* @param prikaz smer pohybu hrace(string)
+* @param velikost velikost herniho planu(int)
+* @param hrac posouvany hrac(Hrac *)
+* @param cisloHrace cislo posouvaneho hrace(int)
+* @param historie historie hernich tahu(stack<string> *)
+* @return cislo hrace, ktery zvitezil(pokud zvitezil) (int)
+*/
 int HerniPlan::pohyb_hrace(string prikaz, int velikost, Hrac *hrac, int cisloHrace, stack<string> *historie){
 	int radek;
 	int sloupec;
@@ -323,7 +372,13 @@ int HerniPlan::pohyb_hrace(string prikaz, int velikost, Hrac *hrac, int cisloHra
 
 	return 0;
 }
-//vypise cast policka podle jeho druhu a natoceni
+/**
+* Vykresleni jednoho policka
+* @param mapa atributy policka mapy(Policko)
+* @param cast cast policka, ktere je rozdeleno do tri casti(int)
+* @param postava cislo hrace na policku(int)
+* @param zacatek cislo hrace, ktery na policku startoval(int)
+*/
 void HerniPlan::vypis_policko(Policko mapa, int cast, int postava, int zacatek){
 	//políčko tvaru L
 	if(mapa.druh == 0){
@@ -425,7 +480,12 @@ void HerniPlan::vypis_policko(Policko mapa, int cast, int postava, int zacatek){
 		}
 	}
 }
-//vypise popisek k mape
+/**
+* Vytvoreni popisku herniho planu
+* @param radek cislo radku indikujici vypsani vodorovneho popisku(int)
+* @param cast cast policka, ktere je rozdeleno do tri casti (int)
+* @param zacatek indikuje, zda se jedna o levy nebo pravy svisly popisek(bool)
+*/
 void HerniPlan::popisek(int radek, int cast, bool zacatek){
 	if(radek == 0 && cast == 0 && zacatek == true){
 		if(velikost >= 5) cout << "\t\t" << "   A\t\t   B";
@@ -463,7 +523,11 @@ void HerniPlan::popisek(int radek, int cast, bool zacatek){
 	else cout << "\t";
 
 }
-//vypise herni mapu
+/**
+* Vypsani (vykresleni) herni mapy
+* @param hrac[] vsichni hraci(Hrac)
+* @param pocetHracu pocet hracu ve hre (int)
+*/
 void HerniPlan::vypis(Hrac hrac[], int pocetHracu){
 	for(int i = 0; i < velikost; i++){
 		//rozdeleni jednoho policka na tri kvuli lepsi graficke podobe
@@ -514,11 +578,20 @@ void HerniPlan::vypis(Hrac hrac[], int pocetHracu){
 		}
 	}
 }
-//"prekresli" obrazovku
+/**
+* Vycisti terminalovou obrazovku
+* @return terminalovy prikaz pro posun/vycisteni pohledu(int)
+*/
 int HerniPlan::cista_obrazovka(){
 	return write(STDOUT_FILENO,"\e[1;1H\e[2J\n",12);
 }
-//vlozi policko na souradnici a ulozi vysunute
+/**
+* Vlozi volne policko na souradnici a ulozi vysunute
+* @param x radek herniho planu(int)
+* @param y sloupec herniho planu (int)
+* @param hrac[] vsichni hraci(Hrac)
+* @param pocetHracu pocet hracu ve hre(int)
+*/
 void HerniPlan::vloz(int x, int y, Hrac hrac[], int pocetHracu){
 	Policko vysunute;
 	//vlozeni volne policko podle souradnic
@@ -573,7 +646,13 @@ void HerniPlan::vloz(int x, int y, Hrac hrac[], int pocetHracu){
 		}
 	}
 }
-//posune radu
+/**
+* Posunuti rady
+* @param symbol znak reprezentujici vlozeni policka na miste, kde se nachazi popisek s danym znakem(string)
+* @param hrac[] vsichni hraci(Hrac)
+* @param pocetHracu pocet hracu ve hre(int)
+* @return hodnota reprezentujici, zda byl symbol na hernim planu a byl-li tedy umoznen posun(bool)
+*/
 bool HerniPlan::posun(string symbol, Hrac hrac[], int pocetHracu){
 	if(symbol == "A" && vlozenePolicko != "S") vloz(0,1,hrac,pocetHracu);
 	else if(symbol == "B" && vlozenePolicko != "R") vloz(0,3,hrac,pocetHracu);
@@ -604,25 +683,40 @@ bool HerniPlan::posun(string symbol, Hrac hrac[], int pocetHracu){
 	vlozenePolicko = symbol;
 	return true;
 }
-//otoci s volnym polickem
+/**
+* Otoci s volnym polickem
+*/
 void HerniPlan::otoc(){
 	if(volne.otoceni == 3) volne.otoceni = 0;
 	else volne.otoceni++; 
 }
-//otoci s volnym polickem zpet
+/**
+* Otoci s volnym polickem zpet
+*/
 void HerniPlan::otoc_zpet(){
 	if(volne.otoceni == 0) volne.otoceni = 3;
 	else volne.otoceni--; 
 }
-//vrati posledni provedene vlozeni policka
+/**
+* Posledni provedene vlozeni policka
+* @return naposledy pouzity prikaz pro vsunuti policka(string)
+*/
 string HerniPlan::vlozene_policko(){
 	return vlozenePolicko;
 }
-//pro vraceni vlozeneho policka se musi nastavit vlozenePolicko
+/**
+* Nastavi vlozenePolicko po navraceni vlozeneho policka
+*/
 void HerniPlan::nastav_vlozene_policko(string policko){
 	vlozenePolicko = policko;
 }
-//vrati hracem vzaty predmet zpet do hry a vrati hru do stavu pred sebranim tohoto predmetu
+/**
+* Vrati hracem sebrany predmet zpet do hry a vrati hru do stavu pred sebranim tohoto predmetu
+* @param x radek herniho planu(int)
+* @param y sloupec herniho planu (int)
+* @param predmet vraceny predmet(string)
+* @param hrac hrac, ktery vraci predmet(Hrac *)
+*/
 void HerniPlan::vrat_predmet_zpet(int x, int y, string predmet, Hrac *hrac){
 	int iPredmet = atoi(predmet.c_str());
 	volnePredmety[hrac->hledany_predmet()] = herni_predmety(hrac->hledany_predmet());
@@ -630,7 +724,10 @@ void HerniPlan::vrat_predmet_zpet(int x, int y, string predmet, Hrac *hrac){
 	volnePredmety[iPredmet] = iPredmet;
 	hrac->nastav_predmet(iPredmet);
 }
-//ulozi herni plan do souboru
+/**
+* Ulozeni herniho planu do souboru
+* @param soubor soubor, kam se herni plan ulozi(ofstream *)
+*/
 void HerniPlan::uloz(ofstream *soubor){
 	*soubor << velikost << endl << vlozenePolicko << endl;
 	for(int i = 0; i < velikost; i++){

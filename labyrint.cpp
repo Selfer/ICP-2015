@@ -1,15 +1,15 @@
-/*
- * Soubor:  labyrint.cpp
- * Datum:   6.5.2015
- * Autori:  Martin Kondr, Ondrej Kuchar
- * Projekt: ICP - Labyrint
- * Popis:   Program realizuje hru labyrint
- */
+/**
+*\author xkondr01 xkucha20
+* @file labyrint.cpp
+* @brief Zpracuje parametry prikazove radky a spusti herni mechanismus
+*/
 #include "labyrint.h"
 #include "hrac.h"
 #include "herni_plan.h"
 
-//napoveda
+/**
+* Vypsani napovedy
+*/
 void napoveda(){
 printf("Hra labyrint\n"
 "Autor: Martin Kondr, Ondrej Kuchar\n"
