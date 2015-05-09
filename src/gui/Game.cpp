@@ -6,6 +6,7 @@
 #include <QImage>
 #include <QList>
 #include <QKeyEvent>
+#include <QDebug>
 
 Game::Game(QWidget *parent){
 
@@ -44,6 +45,22 @@ void Game::keyPressEvent(QKeyEvent *event){
             historie.push(vPolicko);
         }
     }
+    else if (event->key() == Qt::Key_Left){
+        int x;
+        int y;
+        plan.pohyb_hrace("l",velikost,&hrac[hracNaTahu],hracNaTahu,&historie);
+        hrac[hracNaTahu].vrat_pozici(&x, &y);
+        hrac_gui[hracNaTahu]->setPos(40+x*52,40+y*52);
+        qDebug() << "Jdu do leva";
+    }
+    else if (event->key() == Qt::Key_Right){
+        int x;
+        int y;
+        plan.pohyb_hrace("p",velikost,&hrac[hracNaTahu],hracNaTahu,&historie);
+        hrac[hracNaTahu].vrat_pozici(&x, &y);
+        hrac_gui[hracNaTahu]->setPos(40+x*52,40+y*52);
+        qDebug() << "Jdu do prava";
+    }
 }
 void Game::rotate() {
     plan.otoc();
@@ -55,22 +72,7 @@ void Game::rotate() {
 
 void Game::gameUpdate()
 {
-    for(int i = 0; i < pocetHracu; i++){
-        int radek;
-        int sloupec;
-        hrac[i].vrat_pozici(&radek,&sloupec);
 
-        //players << Player(i);
-        //player->setFlag(QGraphicsItem::ItemIsFocusable);
-        //player->setFocus();
-        //players[i]->setPos(15+radek*52,15+sloupec*52);
-        //scene->addItem(players[i]);
-
-        score = new Score();
-        score->vypis(i,hrac[i].pocet_bodu());
-        score->setPos(700,i*25);
-        scene->addItem(score);
-    }
     int druh;
     int otoceni;
     int cPredmetu;
@@ -110,13 +112,27 @@ void Game::gameUpdate()
         scene->addItem(predmet);
     }
 
+    for(int i = 0; i < pocetHracu; i++){
+        int radek;
+        int sloupec;
+        hrac[i].vrat_pozici(&radek,&sloupec);
+
+        hrac_gui[i]->setPos(15+radek*52,15+sloupec*52);
+        scene->addItem(hrac_gui[i]);
+
+        score = new Score();
+        score->vypis(i,hrac[i].pocet_bodu());
+        score->setPos(700,i*25);
+        scene->addItem(score);
+    }
+
 }
 
 void Game::startGame(int size){
     velikost = size;
     pocetHracu = 4;
     //vylosovani zacinajiciho hrace
-    int hracNaTahu = rand() % pocetHracu;
+    hracNaTahu = rand() % pocetHracu;
     int vyhral = 0;
     bool posunuto = false;
     string prikaz;
@@ -126,6 +142,7 @@ void Game::startGame(int size){
     hrac = new Hrac[pocetHracu];
     for(int i = 0; i < pocetHracu; i++){
         hrac[i] = Hrac(i, velikost);
+        hrac_gui << new Player(i);
         plan.prirad_predmet(&hrac[i]);
     }
     gameUpdate();

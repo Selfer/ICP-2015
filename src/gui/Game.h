@@ -25,11 +25,13 @@ public:
     Predmet * predmet;
 private:
     HerniPlan plan;
-    QList<Hrac> hraci;
+    QList<Player*> hrac_gui;
     Hrac *hrac;
     int pocetHracu;
+    int hracNaTahu;
     int velikost;
     bool posunuto;
+    stack<string> historie;
 public slots:
     void startGame(int size = 7);
 };

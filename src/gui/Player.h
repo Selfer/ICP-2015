@@ -8,8 +8,8 @@
 class Player:public QObject, public QGraphicsPixmapItem{
     Q_OBJECT
 public:
+    Player(QGraphicsItem * parent=0);
     Player(int index, QGraphicsItem * parent=0);
-    void keyPressEvent(QKeyEvent * event);
 };
 
 #endif
