@@ -50,16 +50,39 @@ void Game::keyPressEvent(QKeyEvent *event){
         int y;
         plan.pohyb_hrace("l",velikost,&hrac[hracNaTahu],hracNaTahu,&historie);
         hrac[hracNaTahu].vrat_pozici(&x, &y);
-        hrac_gui[hracNaTahu]->setPos(40+x*52,40+y*52);
-        qDebug() << "Jdu do leva";
+        hrac_gui[hracNaTahu]->setPos(40+y*52,40+x*52);
+        qDebug() << "Jdu na pozici " << x << ", " << y;
     }
     else if (event->key() == Qt::Key_Right){
         int x;
         int y;
         plan.pohyb_hrace("p",velikost,&hrac[hracNaTahu],hracNaTahu,&historie);
         hrac[hracNaTahu].vrat_pozici(&x, &y);
-        hrac_gui[hracNaTahu]->setPos(40+x*52,40+y*52);
-        qDebug() << "Jdu do prava";
+        hrac_gui[hracNaTahu]->setPos(40+y*52,40+x*52);
+        qDebug() << "Jdu na pozici " << x << ", " << y;
+    }
+    else if (event->key() == Qt::Key_Up){
+        int x;
+        int y;
+        plan.pohyb_hrace("n",velikost,&hrac[hracNaTahu],hracNaTahu,&historie);
+        hrac[hracNaTahu].vrat_pozici(&x, &y);
+        hrac_gui[hracNaTahu]->setPos(40+y*52,40+x*52);
+        qDebug() << "Jdu na pozici " << x << ", " << y;
+    }
+    else if (event->key() == Qt::Key_Down){
+        int x;
+        int y;
+        plan.pohyb_hrace("d",velikost,&hrac[hracNaTahu],hracNaTahu,&historie);
+        hrac[hracNaTahu].vrat_pozici(&x, &y);
+        hrac_gui[hracNaTahu]->setPos(40+y*52,40+x*52);
+        qDebug() << "Jdu na pozici " << x << ", " << y;
+    }
+    else if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) {
+        hracNaTahu++;
+        if(hracNaTahu == pocetHracu) {
+            hracNaTahu = 0;
+        }
+        qDebug() << "Dalsi hrac: " << hracNaTahu;
     }
 }
 void Game::rotate() {
@@ -85,12 +108,12 @@ void Game::gameUpdate()
 
             chodba = new Chodba();
             chodba->vykresliChodbu(druh,otoceni);
-            chodba->setPos(20+i*52,20+j*52);
+            chodba->setPos(20+j*52,20+i*52);
             scene->addItem(chodba);
             if(cPredmetu >= 0){
                 predmet = new Predmet();
                 predmet->vykresliPredmet(cPredmetu);
-                predmet->setPos(40+i*52,40+j*52);
+                predmet->setPos(40+j*52,40+i*52);
                 scene->addItem(predmet);
             }
         }
@@ -111,13 +134,14 @@ void Game::gameUpdate()
         predmet->setPos(70+(velikost*52),120);
         scene->addItem(predmet);
     }
-
+    hrac_gui.clear();
     for(int i = 0; i < pocetHracu; i++){
         int radek;
         int sloupec;
+        hrac_gui << new Player(i);
         hrac[i].vrat_pozici(&radek,&sloupec);
 
-        hrac_gui[i]->setPos(15+radek*52,15+sloupec*52);
+        hrac_gui[i]->setPos(15+sloupec*52,15+radek*52);
         scene->addItem(hrac_gui[i]);
 
         score = new Score();
@@ -142,7 +166,6 @@ void Game::startGame(int size){
     hrac = new Hrac[pocetHracu];
     for(int i = 0; i < pocetHracu; i++){
         hrac[i] = Hrac(i, velikost);
-        hrac_gui << new Player(i);
         plan.prirad_predmet(&hrac[i]);
     }
     gameUpdate();

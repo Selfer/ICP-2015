@@ -4,12 +4,14 @@
 * @brief Definice herniho planu a funkci s nim spojenych
 */
 #include "herni_plan.h"
+#include "time.h"
 
 /**
 * Inicializace herniho planu
 * @param vel velikost herniho planu(int)
 */
 void HerniPlan::inicializace(int vel){
+    srand(time(0));
 	velikost = vel;
 	vlozenePolicko = "F";
 	lPole = 4;
@@ -333,12 +335,12 @@ int HerniPlan::pohyb_hrace(string prikaz, int velikost, Hrac *hrac, int cisloHra
 			(mapa[radek][sloupec].druh == 2 && mapa[radek][sloupec].otoceni == 0) ||
 			(mapa[radek][sloupec].druh == 2 && mapa[radek][sloupec].otoceni == 2)) return 0; 
 		//kontrola, zda se muze hrac posunout na nove policko
-		if((mapa[radek][sloupec-1].druh == 0 && mapa[radek][sloupec-1].otoceni == 2) ||
+        if((mapa[radek][sloupec-1].druh == 0 && mapa[radek][sloupec-1].otoceni == 2) ||
 			(mapa[radek][sloupec-1].druh == 0 && mapa[radek][sloupec-1].otoceni == 3) ||
 			(mapa[radek][sloupec-1].druh == 1 && mapa[radek][sloupec-1].otoceni == 1) ||
 			(mapa[radek][sloupec-1].druh == 2 && mapa[radek][sloupec-1].otoceni == 0) ||
 			(mapa[radek][sloupec-1].druh == 2 && mapa[radek][sloupec-1].otoceni == 2)) return 0; 
-		hrac->pohyb(prikaz[0], velikost, false);
+        hrac->pohyb(prikaz[0], velikost, false);
 		sloupec--;
 		historie->push("p");
 	}

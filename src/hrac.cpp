@@ -118,7 +118,7 @@ void Hrac::pohyb(char prikaz, int velikost, bool presah){
 	}
 	else if(prikaz == 'l'){
 		if(presah == true && y == 0) y = velikost - 1;
-		else y--;
+        else y--;
 	}
 }
 /**
