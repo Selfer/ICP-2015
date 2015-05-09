@@ -26,9 +26,7 @@ public:
     Game(QWidget * parent=0);
     void keyPressEvent(QKeyEvent * event);
     void keyReleaseEvent(QKeyEvent * event);
-    void rotate();
-    void showInGameMenu();
-    void drawPanel(int x, int y, int width, int height, QColor color, double opacity);
+
     QGraphicsScene * scene;
     Score * score;
     Chodba * chodba;
@@ -41,11 +39,25 @@ private:
     int pocetHracu;
     int hracNaTahu;
     int velikost;
+    int labels_num;
     bool running;
+    bool menu;
     bool posunuto;
+    bool hrac_posunul;
     stack<string> historie;
     QComboBox *size_cbox;
     QComboBox *players_cbox;
+    void rotate();
+    void movePlayer(const char *dir);
+    void showInGameMenu();
+    void drawPanel(int x, int y, int width, int height, QColor color, double opacity);
+    void insertStone(const char *index);
+    bool isEvenBorder(int x, int y);
+    void createTopLabels();
+    void createBottomLabels();
+    void createLeftLabels();
+    void createRightLabels();
+    void createLabels();
 public slots:
     void startGame(int size = 7, int players = 2);
     void updateGame();

@@ -3,8 +3,8 @@
 
 Game::Game(QWidget *parent){
     running = false;
-    players_cbox = NULL;
-    size_cbox = NULL;
+    hrac_posunul = false;
+    menu = false;
     scene = new QGraphicsScene();
     scene->setSceneRect(0,0,1024,768);
     setBackgroundBrush(QBrush(QImage(":/images/pozadi.jpg")));
@@ -17,349 +17,49 @@ Game::Game(QWidget *parent){
 }
 
 void Game::keyPressEvent(QKeyEvent *event){
-    if (event->key() == Qt::Key_Space){
+    int key = event->key();
+    if (key == Qt::Key_Space){
         rotate();
     }
-    else if (event->key() == Qt::Key_A) {
-        posunuto = plan.posun("A", hrac, pocetHracu);
-        string vPolicko = plan.vlozene_policko();
-        if(posunuto == false) {
-            cout << "Nelze vsunout policko na tohle misto" << endl;
-        }
-        else {
-            scene->clear();
-            updateGame();
-            historie.push("A");
-            historie.push(vPolicko);
-        }
+    else if (key == Qt::Key_A || key == Qt::Key_B || key == Qt::Key_C || key == Qt::Key_D ||
+             key == Qt::Key_E || key == Qt::Key_I || key == Qt::Key_J || key == Qt::Key_K ||
+             key == Qt::Key_L || key == Qt::Key_M || key == Qt::Key_O || key == Qt::Key_P ||
+             key == Qt::Key_Q || key == Qt::Key_R || key == Qt::Key_S || key == Qt::Key_U ||
+             key == Qt::Key_V || key == Qt::Key_W || key == Qt::Key_X || key == Qt::Key_Y) {
+        insertStone(event->text().toUpper().toStdString().c_str());
     }
-    else if (event->key() == Qt::Key_B) {
-        posunuto = plan.posun("B", hrac, pocetHracu);
-        string vPolicko = plan.vlozene_policko();
-        if(posunuto == false) {
-            cout << "Nelze vsunout policko na tohle misto" << endl;
-        }
-        else {
-            scene->clear();
-            updateGame();
-            historie.push("B");
-            historie.push(vPolicko);
-        }
+    else if (key == Qt::Key_Left){
+        movePlayer("l");
     }
-    else if (event->key() == Qt::Key_C) {
-        posunuto = plan.posun("C", hrac, pocetHracu);
-        string vPolicko = plan.vlozene_policko();
-        if(posunuto == false) {
-            cout << "Nelze vsunout policko na tohle misto" << endl;
-        }
-        else {
-            scene->clear();
-            updateGame();
-            historie.push("C");
-            historie.push(vPolicko);
-        }
+    else if (key == Qt::Key_Right){
+        movePlayer("p");
     }
-    else if (event->key() == Qt::Key_D) {
-        posunuto = plan.posun("D", hrac, pocetHracu);
-        string vPolicko = plan.vlozene_policko();
-        if(posunuto == false) {
-            cout << "Nelze vsunout policko na tohle misto" << endl;
-        }
-        else {
-            scene->clear();
-            updateGame();
-            historie.push("D");
-            historie.push(vPolicko);
-        }
+    else if (key == Qt::Key_Up){
+        movePlayer("n");
     }
-    else if (event->key() == Qt::Key_E) {
-        posunuto = plan.posun("E", hrac, pocetHracu);
-        string vPolicko = plan.vlozene_policko();
-        if(posunuto == false) {
-            cout << "Nelze vsunout policko na tohle misto" << endl;
-        }
-        else {
-            scene->clear();
-            updateGame();
-            historie.push("E");
-            historie.push(vPolicko);
-        }
+    else if (key == Qt::Key_Down){
+        movePlayer("d");
     }
-    else if (event->key() == Qt::Key_I) {
-        posunuto = plan.posun("I", hrac, pocetHracu);
-        string vPolicko = plan.vlozene_policko();
-        if(posunuto == false) {
-            cout << "Nelze vsunout policko na tohle misto" << endl;
-        }
-        else {
-            scene->clear();
-            updateGame();
-            historie.push("I");
-            historie.push(vPolicko);
-        }
-    }
-    else if (event->key() == Qt::Key_J) {
-        posunuto = plan.posun("J", hrac, pocetHracu);
-        string vPolicko = plan.vlozene_policko();
-        if(posunuto == false) {
-            cout << "Nelze vsunout policko na tohle misto" << endl;
-        }
-        else {
-            scene->clear();
-            updateGame();
-            historie.push("J");
-            historie.push(vPolicko);
-        }
-    }
-    else if (event->key() == Qt::Key_K) {
-        posunuto = plan.posun("K", hrac, pocetHracu);
-        string vPolicko = plan.vlozene_policko();
-        if(posunuto == false) {
-            cout << "Nelze vsunout policko na tohle misto" << endl;
-        }
-        else {
-            scene->clear();
-            updateGame();
-            historie.push("K");
-            historie.push(vPolicko);
-        }
-    }
-    else if (event->key() == Qt::Key_L) {
-        posunuto = plan.posun("L", hrac, pocetHracu);
-        string vPolicko = plan.vlozene_policko();
-        if(posunuto == false) {
-            cout << "Nelze vsunout policko na tohle misto" << endl;
-        }
-        else {
-            scene->clear();
-            updateGame();
-            historie.push("L");
-            historie.push(vPolicko);
-        }
-    }
-    else if (event->key() == Qt::Key_M) {
-        posunuto = plan.posun("M", hrac, pocetHracu);
-        string vPolicko = plan.vlozene_policko();
-        if(posunuto == false) {
-            cout << "Nelze vsunout policko na tohle misto" << endl;
-        }
-        else {
-            scene->clear();
-            updateGame();
-            historie.push("M");
-            historie.push(vPolicko);
-        }
-    }
-    else if (event->key() == Qt::Key_O) {
-        posunuto = plan.posun("O", hrac, pocetHracu);
-        string vPolicko = plan.vlozene_policko();
-        if(posunuto == false) {
-            cout << "Nelze vsunout policko na tohle misto" << endl;
-        }
-        else {
-            scene->clear();
-            updateGame();
-            historie.push("O");
-            historie.push(vPolicko);
-        }
-    }
-    else if (event->key() == Qt::Key_P) {
-        posunuto = plan.posun("P", hrac, pocetHracu);
-        string vPolicko = plan.vlozene_policko();
-        if(posunuto == false) {
-            cout << "Nelze vsunout policko na tohle misto" << endl;
-        }
-        else {
-            scene->clear();
-            updateGame();
-            historie.push("P");
-            historie.push(vPolicko);
-        }
-    }
-    else if (event->key() == Qt::Key_Q) {
-        posunuto = plan.posun("Q", hrac, pocetHracu);
-        string vPolicko = plan.vlozene_policko();
-        if(posunuto == false) {
-            cout << "Nelze vsunout policko na tohle misto" << endl;
-        }
-        else {
-            scene->clear();
-            updateGame();
-            historie.push("Q");
-            historie.push(vPolicko);
-        }
-    }
-    else if (event->key() == Qt::Key_R) {
-        posunuto = plan.posun("R", hrac, pocetHracu);
-        string vPolicko = plan.vlozene_policko();
-        if(posunuto == false) {
-            cout << "Nelze vsunout policko na tohle misto" << endl;
-        }
-        else {
-            scene->clear();
-            updateGame();
-            historie.push("R");
-            historie.push(vPolicko);
-        }
-    }
-    else if (event->key() == Qt::Key_S) {
-        posunuto = plan.posun("S", hrac, pocetHracu);
-        string vPolicko = plan.vlozene_policko();
-        if(posunuto == false) {
-            cout << "Nelze vsunout policko na tohle misto" << endl;
-        }
-        else {
-            scene->clear();
-            updateGame();
-            historie.push("S");
-            historie.push(vPolicko);
-        }
-    }
-    else if (event->key() == Qt::Key_U) {
-        posunuto = plan.posun("U", hrac, pocetHracu);
-        string vPolicko = plan.vlozene_policko();
-        if(posunuto == false) {
-            cout << "Nelze vsunout policko na tohle misto" << endl;
-        }
-        else {
-            scene->clear();
-            updateGame();
-            historie.push("U");
-            historie.push(vPolicko);
-        }
-    }
-    else if (event->key() == Qt::Key_V) {
-        posunuto = plan.posun("V", hrac, pocetHracu);
-        string vPolicko = plan.vlozene_policko();
-        if(posunuto == false) {
-            cout << "Nelze vsunout policko na tohle misto" << endl;
-        }
-        else {
-            scene->clear();
-            updateGame();
-            historie.push("V");
-            historie.push(vPolicko);
-        }
-    }
-    else if (event->key() == Qt::Key_W) {
-        posunuto = plan.posun("W", hrac, pocetHracu);
-        string vPolicko = plan.vlozene_policko();
-        if(posunuto == false) {
-            cout << "Nelze vsunout policko na tohle misto" << endl;
-        }
-        else {
-            scene->clear();
-            updateGame();
-            historie.push("W");
-            historie.push(vPolicko);
-        }
-    }
-    else if (event->key() == Qt::Key_X) {
-        posunuto = plan.posun("X", hrac, pocetHracu);
-        string vPolicko = plan.vlozene_policko();
-        if(posunuto == false) {
-            cout << "Nelze vsunout policko na tohle misto" << endl;
-        }
-        else {
-            scene->clear();
-            updateGame();
-            historie.push("X");
-            historie.push(vPolicko);
-        }
-    }
-    else if (event->key() == Qt::Key_Y) {
-        posunuto = plan.posun("Y", hrac, pocetHracu);
-        string vPolicko = plan.vlozene_policko();
-        if(posunuto == false) {
-            cout << "Nelze vsunout policko na tohle misto" << endl;
-        }
-        else {
-            scene->clear();
-            updateGame();
-            historie.push("Y");
-            historie.push(vPolicko);
-        }
-    }
-    else if (event->key() == Qt::Key_Left){
-        int x;
-        int y;
-        plan.pohyb_hrace("l",velikost,&hrac[hracNaTahu],hracNaTahu,&historie);
-        hrac[hracNaTahu].vrat_pozici(&x, &y);
-        int posunx = 30;
-        int posuny = 30;
-        if(hracNaTahu == 1) {
-            posunx = 40;
-            posuny = 40;
-        }
-        else if(hracNaTahu == 2) posuny = 40;
-        else if(hracNaTahu == 3) posunx = 40;
-        hrac_gui[hracNaTahu]->setPos(posuny+y*52,posunx+x*52);
-        qDebug() << "Jdu na pozici " << x << ", " << y;
-    }
-    else if (event->key() == Qt::Key_Right){
-        int x;
-        int y;
-        plan.pohyb_hrace("p",velikost,&hrac[hracNaTahu],hracNaTahu,&historie);
-        hrac[hracNaTahu].vrat_pozici(&x, &y);
-        int posunx = 30;
-        int posuny = 30;
-        if(hracNaTahu == 1) {
-            posunx = 40;
-            posuny = 40;
-        }
-        else if(hracNaTahu == 2) posuny = 40;
-        else if(hracNaTahu == 3) posunx = 40;
-        hrac_gui[hracNaTahu]->setPos(posuny+y*52,posunx+x*52);
-        qDebug() << "Jdu na pozici " << x << ", " << y;
-    }
-    else if (event->key() == Qt::Key_Up){
-        int x;
-        int y;
-        plan.pohyb_hrace("n",velikost,&hrac[hracNaTahu],hracNaTahu,&historie);
-        hrac[hracNaTahu].vrat_pozici(&x, &y);
-        int posunx = 30;
-        int posuny = 30;
-        if(hracNaTahu == 1) {
-            posunx = 40;
-            posuny = 40;
-        }
-        else if(hracNaTahu == 2) posuny = 40;
-        else if(hracNaTahu == 3) posunx = 40;
-        hrac_gui[hracNaTahu]->setPos(posuny+y*52,posunx+x*52);
-        qDebug() << "Jdu na pozici " << x << ", " << y;
-    }
-    else if (event->key() == Qt::Key_Down){
-        int x;
-        int y;
-        plan.pohyb_hrace("d",velikost,&hrac[hracNaTahu],hracNaTahu,&historie);
-        hrac[hracNaTahu].vrat_pozici(&x, &y);
-        int posunx = 30;
-        int posuny = 30;
-        if(hracNaTahu == 1) {
-            posunx = 40;
-            posuny = 40;
-        }
-        else if(hracNaTahu == 2) posuny = 40;
-        else if(hracNaTahu == 3) posunx = 40;
-        hrac_gui[hracNaTahu]->setPos(posuny+y*52,posunx+x*52);
-        qDebug() << "Jdu na pozici " << x << ", " << y;
-    }
-    else if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) {
+    else if (key == Qt::Key_Enter || key == Qt::Key_Return) {
         hracNaTahu++;
         if(hracNaTahu == pocetHracu) {
             hracNaTahu = 0;
         }
         qDebug() << "Dalsi hrac: " << hracNaTahu << hrac[hracNaTahu].hledany_predmet();
+        hrac_posunul = false;
+        posunuto = false;
+        updateGame();
     }
-    else if (event->key() == Qt::Key_Control) {
+    else if (key == Qt::Key_Control) {
         predmet = new Predmet();
         predmet->vykresliPredmet(hrac[hracNaTahu].hledany_predmet());
-        predmet->setPos(65+(velikost*52),170);
+        predmet->setPos(125+(velikost*52),170);
         scene->addItem(predmet);
         qDebug() << "Dalsi hrac: " << hracNaTahu << hrac[hracNaTahu].hledany_predmet();
     }
-    else if (event->key() == Qt::Key_Escape) {
-        if(running) showInGameMenu();
+    else if (key == Qt::Key_Escape) {
+        if(running && !menu) showInGameMenu();
+        else if(menu) updateGame();
     }
 }
 void Game::keyReleaseEvent(QKeyEvent *event){
@@ -374,6 +74,43 @@ void Game::rotate() {
     int otoceni = plan.vrat_otoceni(-1,-1);
     int cPredmetu = plan.vrat_predmet(-1,-1);
     volna_chodba->vykresliChodbu(druh,otoceni);
+}
+
+void Game::insertStone(const char *index)
+{
+    if(!posunuto) {
+        posunuto = plan.posun(index, hrac, pocetHracu);
+        string vPolicko = plan.vlozene_policko();
+        if(posunuto == false) {
+            cout << "Nelze vsunout policko na tohle misto" << endl;
+        }
+        else {
+            hrac_posunul = true;
+            scene->clear();
+            updateGame();
+            historie.push(index);
+            historie.push(vPolicko);
+        }
+    }
+}
+
+void Game::movePlayer(const char *dir){
+    if (hrac_posunul) {
+        int x;
+        int y;
+        plan.pohyb_hrace(dir,velikost,&hrac[hracNaTahu],hracNaTahu,&historie);
+        hrac[hracNaTahu].vrat_pozici(&x, &y);
+        int posunx = 70;
+        int posuny = 70;
+        if(hracNaTahu == 1) {
+            posunx = 80;
+            posuny = 80;
+        }
+        else if(hracNaTahu == 2) posuny = 80;
+        else if(hracNaTahu == 3) posunx = 80;
+        hrac_gui[hracNaTahu]->setPos(posuny+y*52,posunx+x*52);
+        qDebug() << "Jdu na pozici " << x << ", " << y;
+    }
 }
 
 void Game::showMainMenu(){
@@ -437,6 +174,7 @@ void Game::showNewGameMenu(){
 }
 
 void Game::showInGameMenu(){
+    menu = true;
     int n = scene->items().size();
     for(int i = 0; i < n; i++) {
         scene->items()[i]->setEnabled(false);
@@ -483,8 +221,75 @@ void Game::drawPanel(int x, int y, int width, int height, QColor color, double o
     scene->addItem(panel);
 }
 
+void Game::createTopLabels() {
+    if(labels_num >= 2) {
+        QGraphicsTextItem *lbl_a = new QGraphicsTextItem("A");
+        lbl_a->setPos(130, 35);
+        scene->addItem(lbl_a);
+        QGraphicsTextItem *lbl_b = new QGraphicsTextItem("B");
+        lbl_b->setPos(235, 35);
+        scene->addItem(lbl_b);
+    }
+    if(labels_num >= 3) {
+        QGraphicsTextItem *lbl_c = new QGraphicsTextItem("C");
+        lbl_c->setPos(340, 35);
+        scene->addItem(lbl_c);
+    }
+    if(labels_num >= 4) {
+        QGraphicsTextItem *lbl_d = new QGraphicsTextItem("D");
+        lbl_d->setPos(445, 35);
+        scene->addItem(lbl_d);
+    }
+    if(labels_num >= 5) {
+        QGraphicsTextItem *lbl_e = new QGraphicsTextItem("E");
+        lbl_e->setPos(550, 35);
+        scene->addItem(lbl_e);
+    }
+}
+
+void Game::createBottomLabels() {
+
+}
+
+void Game::createLeftLabels() {
+
+}
+
+void Game::createRightLabels() {
+    if(labels_num >= 2) {
+        QGraphicsTextItem *lbl_i = new QGraphicsTextItem("I");
+        lbl_i->setPos(70+velikost*52, 130);
+        scene->addItem(lbl_i);
+        QGraphicsTextItem *lbl_j = new QGraphicsTextItem("J");
+        lbl_j->setPos(70+velikost*52, 230);
+        scene->addItem(lbl_j);
+    }
+    if(labels_num >= 3) {
+        QGraphicsTextItem *lbl_k = new QGraphicsTextItem("K");
+        lbl_k->setPos(70+velikost*52, 335);
+        scene->addItem(lbl_k);
+    }
+    if(labels_num >= 4) {
+        QGraphicsTextItem *lbl_l = new QGraphicsTextItem("L");
+        lbl_l->setPos(70+velikost*52, 440);
+        scene->addItem(lbl_l);
+    }
+    if(labels_num >= 5) {
+        QGraphicsTextItem *lbl_m = new QGraphicsTextItem("M");
+        lbl_m->setPos(70+velikost*52, 545);
+        scene->addItem(lbl_m);
+    }
+}
+
+void Game::createLabels() {
+    createTopLabels();
+    createRightLabels();
+    createLeftLabels();
+}
+
 void Game::updateGame(){
     scene->clear();
+    menu = false;
     int druh;
     int otoceni;
     int cPredmetu;
@@ -497,52 +302,70 @@ void Game::updateGame(){
 
             chodba = new Chodba();
             chodba->vykresliChodbu(druh,otoceni);
-            chodba->setPos(20+j*52,20+i*52);
+            chodba->setPos(60+j*52,60+i*52);
             scene->addItem(chodba);
             if(cPredmetu >= 0){
                 predmet = new Predmet();
                 predmet->vykresliPredmet(cPredmetu);
-                predmet->setPos(35+j*52,35+i*52);
+                predmet->setPos(75+j*52,75+i*52);
                 scene->addItem(predmet);
             }
         }
     }
-
+    createLabels();
     druh = plan.vrat_druh(-1,-1);
     otoceni = plan.vrat_otoceni(-1,-1);
     cPredmetu = plan.vrat_predmet(-1,-1);
 
     volna_chodba = new Chodba();
     volna_chodba->vykresliChodbu(druh,otoceni);
-    volna_chodba->setPos(50+(velikost*52),100);
+    volna_chodba->setPos(110+(velikost*52),100);
     scene->addItem(volna_chodba);
 
     if(cPredmetu >= 0){
         predmet = new Predmet();
         predmet->vykresliPredmet(cPredmetu);
-        predmet->setPos(65+(velikost*52),115);
+        predmet->setPos(125+(velikost*52),115);
         scene->addItem(predmet);
     }
     hrac_gui.clear();
+    drawPanel(820, 0, 160, pocetHracu * 28, QColor(Qt::gray), 0.90);
+    int y_pos;
+    switch (hracNaTahu) {
+        case 0:
+            y_pos = 3;
+            break;
+        case 1:
+            y_pos = 28;
+            break;
+        case 2:
+            y_pos = 54;
+            break;
+        case 3:
+            y_pos = 78;
+            break;
+    }
+
+    drawPanel(820,y_pos, 160, 25, QColor(Qt::lightGray), 0.90);
     for(int i = 0; i < pocetHracu; i++){
         int radek;
         int sloupec;
         hrac_gui << new Player(i);
         hrac[i].vrat_pozici(&radek,&sloupec);
-        int posunx = 30;
-        int posuny = 30;
+        int posunx = 70;
+        int posuny = 70;
         if(i == 1) {
-            posunx = 40;
-            posuny = 40;
+            posunx = 80;
+            posuny = 80;
         }
-        else if(i == 2) posuny = 40;
-        else if(i == 3) posunx = 40;
+        else if(i == 2) posuny = 80;
+        else if(i == 3) posunx = 80;
         hrac_gui[i]->setPos(posuny+sloupec*52,posunx+radek*52);
         scene->addItem(hrac_gui[i]);
 
         score = new Score();
         score->vypis(i,hrac[i].pocet_bodu());
-        score->setPos(900,i*25);
+        score->setPos(850,i*25);
         scene->addItem(score);
     }
 
@@ -551,16 +374,27 @@ void Game::updateGame(){
 void Game::startGame(int size, int players){
     pocetHracu = players_cbox->currentText().toInt();
     velikost = size_cbox->currentText().toInt();
+    switch(velikost) {
+        case 5:
+            labels_num = 2;
+            break;
+        case 7:
+            labels_num = 3;
+            break;
+        case 9:
+            labels_num = 4;
+            break;
+        case 11:
+            labels_num = 5;
+            break;
+    }
+
     scene->clear();
     running = true;
     //vylosovani zacinajiciho hrace
     hracNaTahu = rand() % pocetHracu;
-    int vyhral = 0;
-    bool posunuto = false;
-    string prikaz;
-    string posunuti;
+    posunuto = false;
     plan.inicializace(velikost);
-    stack<string> historie;
     hrac = new Hrac[pocetHracu];
     for(int i = 0; i < pocetHracu; i++){
         hrac[i] = Hrac(i, velikost);

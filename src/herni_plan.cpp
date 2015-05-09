@@ -12,7 +12,6 @@
 * @param vel velikost herniho planu(int)
 */
 void HerniPlan::inicializace(int vel){
-    srand(time(0));
 	velikost = vel;
 	vlozenePolicko = "F";
 	lPole = 4;
