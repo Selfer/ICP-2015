@@ -3,6 +3,8 @@
 
 Game::Game(QWidget *parent){
     running = false;
+    players_cbox = NULL;
+    size_cbox = NULL;
     scene = new QGraphicsScene();
     scene->setSceneRect(0,0,1024,768);
     setBackgroundBrush(QBrush(QImage(":/images/pozadi.jpg")));
@@ -380,7 +382,7 @@ void Game::showMainMenu(){
     int x = scene->width()/2 - play_btn->boundingRect().width()/2;
     int y = 250;
     play_btn->setPos(x, y);
-    connect(play_btn, SIGNAL(clicked()), this, SLOT(startGame()));
+    connect(play_btn, SIGNAL(clicked()), this, SLOT(showNewGameMenu()));
     scene->addItem(play_btn);
 
     Button *exit_btn = new Button(QString("Konec"));
@@ -389,6 +391,49 @@ void Game::showMainMenu(){
     exit_btn->setPos(x, y);
     connect(exit_btn, SIGNAL(clicked()), this, SLOT(close()));
     scene->addItem(exit_btn);
+}
+
+void Game::showNewGameMenu(){
+    scene->clear();
+
+    QGraphicsTextItem *players_lbl = new QGraphicsTextItem(QString("Pocet hracu:"));
+    players_lbl->setPos(350, 270);
+    scene->addItem(players_lbl);
+
+    players_cbox = new QComboBox;
+    players_cbox->addItem(QString("2"));
+    players_cbox->addItem(QString("3"));
+    players_cbox->addItem(QString("4"));
+    players_cbox->move(430, 270);
+    scene->addWidget(players_cbox);
+
+    QGraphicsTextItem *board_size_lbl = new QGraphicsTextItem(QString("Velikost desky:"));
+    board_size_lbl->setPos(490, 270);
+    scene->addItem(board_size_lbl);
+
+    size_cbox = new QComboBox;
+    size_cbox->addItem(QString("5"));
+    size_cbox->addItem(QString("7"));
+    size_cbox->addItem(QString("9"));
+    size_cbox->addItem(QString("11"));
+    size_cbox->setCurrentIndex(1);
+    size_cbox->move(570, 270);
+    scene->addWidget(size_cbox);
+
+
+    Button *play_btn = new Button(QString("Zacit"));
+    int x = scene->width()/2 - play_btn->boundingRect().width()/2;
+    int y = 360;
+    play_btn->setPos(x, y);
+    connect(play_btn, SIGNAL(clicked()), this, SLOT(startGame()));
+    scene->addItem(play_btn);
+
+    Button *back_btn = new Button(QString("Zpet"));
+    x = scene->width()/2 - back_btn->boundingRect().width()/2;
+    y += 75;
+    back_btn->setPos(x, y);
+    connect(back_btn, SIGNAL(clicked()), this, SLOT(showMainMenu()));
+    scene->addItem(back_btn);
 }
 
 void Game::showInGameMenu(){
@@ -503,11 +548,11 @@ void Game::updateGame(){
 
 }
 
-void Game::startGame(int size){
+void Game::startGame(int size, int players){
+    pocetHracu = players_cbox->currentText().toInt();
+    velikost = size_cbox->currentText().toInt();
     scene->clear();
     running = true;
-    velikost = size;
-    pocetHracu = 4;
     //vylosovani zacinajiciho hrace
     hracNaTahu = rand() % pocetHracu;
     int vyhral = 0;

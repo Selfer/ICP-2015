@@ -12,6 +12,7 @@
 #include <QGraphicsView>
 #include <QWidget>
 #include <QGraphicsScene>
+#include <QComboBox>
 #include "qobject.h"
 #include "Player.h"
 #include "Score.h"
@@ -43,10 +44,13 @@ private:
     bool running;
     bool posunuto;
     stack<string> historie;
+    QComboBox *size_cbox;
+    QComboBox *players_cbox;
 public slots:
-    void startGame(int size = 7);
+    void startGame(int size = 7, int players = 2);
     void updateGame();
     void showMainMenu();
+    void showNewGameMenu();
 };
 
 #endif
