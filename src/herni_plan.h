@@ -1,3 +1,6 @@
+#include "labyrint.h"
+#include "hrac.h"
+
 //definice herniho planu
 class HerniPlan {
 	private:
@@ -51,11 +54,11 @@ class HerniPlan {
 		//vrati hracem vzaty predmet zpet do hry a vrati hru do stavu pred sebranim tohoto predmetu
 		void vrat_predmet_zpet(int, int, string, Hrac *);
 		//ulozi herni plan do souboru
-		void uloz(ofstream *);
-        //vrati druh policka
-        int vrat_druh(int, int);
-        //vrati otoceni policka
-        int vrat_otoceni(int, int);
-        //vrati predmet na policku
-        int vrat_predmet(int, int);
+                void uloz(ofstream *);
+                //vrati druh policka
+                int vrat_druh(int, int);
+                //vrati otoceni policka
+                int vrat_otoceni(int, int);
+                //vrati predmet na policku
+                int vrat_predmet(int, int);
 };

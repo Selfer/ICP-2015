@@ -8,6 +8,7 @@ int main(int argc, char *argv[]){
 
     game = new Game();
     game->show();
+    game->startGame(11);
 
     return a.exec();
 }

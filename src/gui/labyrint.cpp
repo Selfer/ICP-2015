@@ -5,9 +5,7 @@
  * Projekt: ICP - Labyrint
  * Popis:   Program realizuje hru labyrint
  */
-#include "labyrint.h"
-#include "hrac.h"
-#include "herni_plan.h"
+#include "../herni_plan.h"
 
 //napoveda
 void napoveda(){

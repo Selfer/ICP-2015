@@ -1,0 +1,32 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/hrac0.png</file>
+        <file>images/hrac1.png</file>
+        <file>images/hrac2.png</file>
+        <file>images/hrac3.png</file>
+        <file>images/icesta.jpg</file>
+        <file>images/lcesta.jpg</file>
+        <file>images/p0.png</file>
+        <file>images/p1.png</file>
+        <file>images/p2.png</file>
+        <file>images/p3.png</file>
+        <file>images/p4.png</file>
+        <file>images/p5.png</file>
+        <file>images/p6.png</file>
+        <file>images/p7.png</file>
+        <file>images/p8.png</file>
+        <file>images/p9.png</file>
+        <file>images/p10.png</file>
+        <file>images/p11.png</file>
+        <file>images/p12.png</file>
+        <file>images/p13.png</file>
+        <file>images/p14.png</file>
+        <file>images/p15.png</file>
+        <file>images/p16.png</file>
+        <file>images/p17.png</file>
+        <file>images/p18.png</file>
+        <file>images/p19.png</file>
+        <file>images/pozadi.jpg</file>
+        <file>images/tcesta.jpg</file>
+    </qresource>
+</RCC>

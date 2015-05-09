@@ -1,36 +1,39 @@
 #include "labyrint.h"
 #include "hrac.h"
 //definice hrace
-void Hrac::inicializace(int cisloHrace, int velikost){
-	switch(cisloHrace){
-		case 0:
-			x = 0;
-			y = 0;
-			break;
-		case 1:
-			x = velikost-1;
-			y = velikost-1;
-			break;
-		case 2:
-			x = 0;
-			y = velikost-1;
-			break;
-		case 3:
-			x = velikost-1;
-			y = 0;
-			break;
-		default:
-			cerr << "CHYBA" << endl;
-	}
-	body = 0;
+
+Hrac::Hrac(int cisloHrace, int velikost) {
+    switch(cisloHrace){
+        case 0:
+            x = 0;
+            y = 0;
+            break;
+        case 1:
+            x = velikost-1;
+            y = velikost-1;
+            break;
+        case 2:
+            x = 0;
+            y = velikost-1;
+            break;
+        case 3:
+            x = velikost-1;
+            y = 0;
+            break;
+        default:
+            cerr << "CHYBA" << endl;
+    }
+    body = 0;
 }
+
 //nastavi hodnoty hrace
-void Hrac::inicializace_ulozena(int pozicex, int pozicey, int spredmet, int sbody){
-	x = pozicex;
-	y = pozicey;
-	predmet = spredmet;
-	body = sbody;
+Hrac::Hrac(int pozicex, int pozicey, int spredmet, int sbody){
+    x = pozicex;
+    y = pozicey;
+    predmet = spredmet;
+    body = sbody;
 }
+
 //vrati pocet bodu
 int Hrac::pocet_bodu(){
 	return body;

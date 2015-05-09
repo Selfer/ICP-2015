@@ -5,12 +5,15 @@
 */
 #include "labyrint.h"
 #include "hrac.h"
+
+Hrac::Hrac(){}
+
 /**
 * Inicializace hrace
 * @param cisloHrace cislo inicializovaneho hrace(int)
 * @param velikost velikost herniho planu(int)
 */
-void Hrac::inicializace(int cisloHrace, int velikost){
+Hrac::Hrac(int cisloHrace, int velikost){
 	switch(cisloHrace){
 		case 0:
 			x = 0;
@@ -40,7 +43,7 @@ void Hrac::inicializace(int cisloHrace, int velikost){
 * @param spredmet cislo hracem hledaneho predmetu(int)
 * @param sbody body hrace(int)
 */
-void Hrac::inicializace_ulozena(int pozicex, int pozicey, int spredmet, int sbody){
+Hrac::Hrac(int pozicex, int pozicey, int spredmet, int sbody){
 	x = pozicex;
 	y = pozicey;
 	predmet = spredmet;

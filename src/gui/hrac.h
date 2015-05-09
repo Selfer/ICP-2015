@@ -5,9 +5,9 @@ class Hrac {
 		int predmet;
 		int body;
 	public:
-		void inicializace(int, int);
+        Hrac(int, int);
 		//nastavi hodnoty hrace
-		void inicializace_ulozena(int, int, int, int);
+        Hrac(int, int, int, int);
 		//vrati pocet bodu
 		int pocet_bodu();
 		//vrati cislo hledaneho predmetu

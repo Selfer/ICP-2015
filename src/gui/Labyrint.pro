@@ -15,24 +15,22 @@ TEMPLATE = app
 SOURCES += main.cpp \
     Score.cpp \
     Player.cpp \
-    Health.cpp \
     Game.cpp \
     labyrint.cpp \
-    hrac.cpp \
-    herni_plan.cpp \
     predmet.cpp \
-    chodba.cpp
+    chodba.cpp \
+    ../herni_plan.cpp \
+    ../hrac.cpp
 
 HEADERS  += \
     Score.h \
     Player.h \
-    Health.h \
     Game.h \
     labyrint.h \
-    hrac.h \
-    herni_plan.h \
     predmet.h \
-    chodba.h
+    chodba.h \
+    ../herni_plan.h \
+    ../hrac.h
 
 RESOURCES += \
     res.qrc
