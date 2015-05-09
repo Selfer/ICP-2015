@@ -20,7 +20,8 @@ SOURCES += main.cpp \
     predmet.cpp \
     chodba.cpp \
     ../herni_plan.cpp \
-    ../hrac.cpp
+    ../hrac.cpp \
+    button.cpp
 
 HEADERS  += \
     Score.h \
@@ -30,7 +31,8 @@ HEADERS  += \
     predmet.h \
     chodba.h \
     ../herni_plan.h \
-    ../hrac.h
+    ../hrac.h \
+    button.h
 
 RESOURCES += \
     res.qrc

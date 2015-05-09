@@ -1,15 +1,8 @@
 #include "Game.h"
-#include <QGraphicsTextItem>
-#include <QFont>
-#include <QPainter>
-#include <QBrush>
-#include <QImage>
-#include <QList>
-#include <QKeyEvent>
-#include <QDebug>
+#include "button.h"
 
 Game::Game(QWidget *parent){
-
+    running = false;
     scene = new QGraphicsScene();
     scene->setSceneRect(0,0,1024,768);
     setBackgroundBrush(QBrush(QImage(":/images/pozadi.jpg")));
@@ -18,13 +11,6 @@ Game::Game(QWidget *parent){
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setFixedSize(1024,768);
-
-    /*player = new Player();
-
-    player->setFlag(QGraphicsItem::ItemIsFocusable);
-    player->setFocus();
-
-    scene->addItem(player);*/
 
 }
 
@@ -40,7 +26,7 @@ void Game::keyPressEvent(QKeyEvent *event){
         }
         else {
             scene->clear();
-            gameUpdate();
+            updateGame();
             historie.push("A");
             historie.push(vPolicko);
         }
@@ -53,7 +39,7 @@ void Game::keyPressEvent(QKeyEvent *event){
         }
         else {
             scene->clear();
-            gameUpdate();
+            updateGame();
             historie.push("B");
             historie.push(vPolicko);
         }
@@ -66,7 +52,7 @@ void Game::keyPressEvent(QKeyEvent *event){
         }
         else {
             scene->clear();
-            gameUpdate();
+            updateGame();
             historie.push("C");
             historie.push(vPolicko);
         }
@@ -79,7 +65,7 @@ void Game::keyPressEvent(QKeyEvent *event){
         }
         else {
             scene->clear();
-            gameUpdate();
+            updateGame();
             historie.push("D");
             historie.push(vPolicko);
         }
@@ -92,7 +78,7 @@ void Game::keyPressEvent(QKeyEvent *event){
         }
         else {
             scene->clear();
-            gameUpdate();
+            updateGame();
             historie.push("E");
             historie.push(vPolicko);
         }
@@ -105,7 +91,7 @@ void Game::keyPressEvent(QKeyEvent *event){
         }
         else {
             scene->clear();
-            gameUpdate();
+            updateGame();
             historie.push("I");
             historie.push(vPolicko);
         }
@@ -118,7 +104,7 @@ void Game::keyPressEvent(QKeyEvent *event){
         }
         else {
             scene->clear();
-            gameUpdate();
+            updateGame();
             historie.push("J");
             historie.push(vPolicko);
         }
@@ -131,7 +117,7 @@ void Game::keyPressEvent(QKeyEvent *event){
         }
         else {
             scene->clear();
-            gameUpdate();
+            updateGame();
             historie.push("K");
             historie.push(vPolicko);
         }
@@ -144,7 +130,7 @@ void Game::keyPressEvent(QKeyEvent *event){
         }
         else {
             scene->clear();
-            gameUpdate();
+            updateGame();
             historie.push("L");
             historie.push(vPolicko);
         }
@@ -157,7 +143,7 @@ void Game::keyPressEvent(QKeyEvent *event){
         }
         else {
             scene->clear();
-            gameUpdate();
+            updateGame();
             historie.push("M");
             historie.push(vPolicko);
         }
@@ -170,7 +156,7 @@ void Game::keyPressEvent(QKeyEvent *event){
         }
         else {
             scene->clear();
-            gameUpdate();
+            updateGame();
             historie.push("O");
             historie.push(vPolicko);
         }
@@ -183,7 +169,7 @@ void Game::keyPressEvent(QKeyEvent *event){
         }
         else {
             scene->clear();
-            gameUpdate();
+            updateGame();
             historie.push("P");
             historie.push(vPolicko);
         }
@@ -196,7 +182,7 @@ void Game::keyPressEvent(QKeyEvent *event){
         }
         else {
             scene->clear();
-            gameUpdate();
+            updateGame();
             historie.push("Q");
             historie.push(vPolicko);
         }
@@ -209,7 +195,7 @@ void Game::keyPressEvent(QKeyEvent *event){
         }
         else {
             scene->clear();
-            gameUpdate();
+            updateGame();
             historie.push("R");
             historie.push(vPolicko);
         }
@@ -222,7 +208,7 @@ void Game::keyPressEvent(QKeyEvent *event){
         }
         else {
             scene->clear();
-            gameUpdate();
+            updateGame();
             historie.push("S");
             historie.push(vPolicko);
         }
@@ -235,7 +221,7 @@ void Game::keyPressEvent(QKeyEvent *event){
         }
         else {
             scene->clear();
-            gameUpdate();
+            updateGame();
             historie.push("U");
             historie.push(vPolicko);
         }
@@ -248,7 +234,7 @@ void Game::keyPressEvent(QKeyEvent *event){
         }
         else {
             scene->clear();
-            gameUpdate();
+            updateGame();
             historie.push("V");
             historie.push(vPolicko);
         }
@@ -261,7 +247,7 @@ void Game::keyPressEvent(QKeyEvent *event){
         }
         else {
             scene->clear();
-            gameUpdate();
+            updateGame();
             historie.push("W");
             historie.push(vPolicko);
         }
@@ -274,7 +260,7 @@ void Game::keyPressEvent(QKeyEvent *event){
         }
         else {
             scene->clear();
-            gameUpdate();
+            updateGame();
             historie.push("X");
             historie.push(vPolicko);
         }
@@ -287,7 +273,7 @@ void Game::keyPressEvent(QKeyEvent *event){
         }
         else {
             scene->clear();
-            gameUpdate();
+            updateGame();
             historie.push("Y");
             historie.push(vPolicko);
         }
@@ -370,11 +356,13 @@ void Game::keyPressEvent(QKeyEvent *event){
         scene->addItem(predmet);
         qDebug() << "Dalsi hrac: " << hracNaTahu << hrac[hracNaTahu].hledany_predmet();
     }
+    else if (event->key() == Qt::Key_Escape) {
+        if(running) showInGameMenu();
+    }
 }
 void Game::keyReleaseEvent(QKeyEvent *event){
     if (event->key() == Qt::Key_Control) {
-        scene->clear();
-        gameUpdate();
+        updateGame();
     }
 }
 
@@ -386,9 +374,51 @@ void Game::rotate() {
     volna_chodba->vykresliChodbu(druh,otoceni);
 }
 
-void Game::gameUpdate()
-{
+void Game::showMainMenu(){
+    scene->clear();
+    Button *play_btn = new Button(QString("Nova hra"));
+    int x = scene->width()/2 - play_btn->boundingRect().width()/2;
+    int y = 250;
+    play_btn->setPos(x, y);
+    connect(play_btn, SIGNAL(clicked()), this, SLOT(startGame()));
+    scene->addItem(play_btn);
 
+    Button *exit_btn = new Button(QString("Konec"));
+    x = scene->width()/2 - exit_btn->boundingRect().width()/2;
+    y = 500;
+    exit_btn->setPos(x, y);
+    connect(exit_btn, SIGNAL(clicked()), this, SLOT(close()));
+    scene->addItem(exit_btn);
+}
+
+void Game::showInGameMenu(){
+    int n = scene->items().size();
+    for(int i = 0; i < n; i++) {
+        scene->items()[i]->setEnabled(false);
+    }
+    drawPanel(0, 0, 1024, 768, QColor(Qt::gray), 0.65);
+    drawPanel(0,0,400,600,QColor(Qt::cyan), 1);
+
+    Button *resume_btn = new Button(QString("Vratit do hry"));
+    int x = scene->width()/2 - resume_btn->boundingRect().width()/2;
+    int y = 250;
+    resume_btn->setPos(x, y);
+    connect(resume_btn, SIGNAL(clicked()), this, SLOT(updateGame()));
+    scene->addItem(resume_btn);
+}
+
+void Game::drawPanel(int x, int y, int width, int height, QColor color, double opacity){
+    QGraphicsRectItem* panel = new QGraphicsRectItem(x,y,width,height);
+    QBrush br;
+    br.setStyle(Qt::SolidPattern);
+    br.setColor(color);
+    panel->setBrush(br);
+    panel->setOpacity(opacity);
+    scene->addItem(panel);
+}
+
+void Game::updateGame(){
+    scene->clear();
     int druh;
     int otoceni;
     int cPredmetu;
@@ -453,6 +483,8 @@ void Game::gameUpdate()
 }
 
 void Game::startGame(int size){
+    scene->clear();
+    running = true;
     velikost = size;
     pocetHracu = 4;
     //vylosovani zacinajiciho hrace
@@ -468,7 +500,7 @@ void Game::startGame(int size){
         hrac[i] = Hrac(i, velikost);
         plan.prirad_predmet(&hrac[i]);
     }
-    gameUpdate();
+    updateGame();
     show();
 }
 

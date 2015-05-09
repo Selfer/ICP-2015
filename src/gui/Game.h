@@ -1,6 +1,14 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <QGraphicsTextItem>
+#include <QFont>
+#include <QPainter>
+#include <QBrush>
+#include <QImage>
+#include <QList>
+#include <QKeyEvent>
+#include <QDebug>
 #include <QGraphicsView>
 #include <QWidget>
 #include <QGraphicsScene>
@@ -15,10 +23,11 @@ class Game: public QGraphicsView{
     Q_OBJECT
 public:
     Game(QWidget * parent=0);
-    void gameUpdate();
     void keyPressEvent(QKeyEvent * event);
     void keyReleaseEvent(QKeyEvent * event);
     void rotate();
+    void showInGameMenu();
+    void drawPanel(int x, int y, int width, int height, QColor color, double opacity);
     QGraphicsScene * scene;
     Score * score;
     Chodba * chodba;
@@ -31,10 +40,13 @@ private:
     int pocetHracu;
     int hracNaTahu;
     int velikost;
+    bool running;
     bool posunuto;
     stack<string> historie;
 public slots:
     void startGame(int size = 7);
+    void updateGame();
+    void showMainMenu();
 };
 
 #endif

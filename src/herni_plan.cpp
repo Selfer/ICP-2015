@@ -5,6 +5,7 @@
 */
 #include "herni_plan.h"
 #include "time.h"
+#include <QDebug>
 
 /**
 * Inicializace herniho planu
@@ -360,7 +361,8 @@ int HerniPlan::pohyb_hrace(string prikaz, int velikost, Hrac *hrac, int cisloHra
 		else prirad_predmet(hrac);
 		
 		historie->push("bod");
-		historie->push(vrsek);
+        //qDebug() << "Pushing vrsek: " << QString::fromStdString(vrsek);
+        historie->push(vrsek);
 	}
 	else if(hrac->hledany_predmet() == KONEC){
 		if(cisloHrace == 0 && radek == 0 && sloupec == 0) return 1;
