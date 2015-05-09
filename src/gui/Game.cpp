@@ -397,7 +397,7 @@ void Game::showInGameMenu(){
         scene->items()[i]->setEnabled(false);
     }
     drawPanel(0, 0, 1024, 768, QColor(Qt::gray), 0.65);
-    drawPanel(0,0,400,600,QColor(Qt::cyan), 1);
+    drawPanel(1024/2 - 200,200,400,400,QColor(Qt::cyan), 0.85);
 
     Button *resume_btn = new Button(QString("Vratit do hry"));
     int x = scene->width()/2 - resume_btn->boundingRect().width()/2;
@@ -405,6 +405,27 @@ void Game::showInGameMenu(){
     resume_btn->setPos(x, y);
     connect(resume_btn, SIGNAL(clicked()), this, SLOT(updateGame()));
     scene->addItem(resume_btn);
+
+    Button *save_game_btn = new Button(QString("Ulozit hru"));
+    x = scene->width()/2 - save_game_btn->boundingRect().width()/2;
+    y += 75;
+    save_game_btn->setPos(x, y);
+    //connect(save_game_btn, SIGNAL(clicked()), this, SLOT(showMainMenu()));
+    scene->addItem(save_game_btn);
+
+    Button *back_to_menu_btn = new Button(QString("Vratit do menu"));
+    x = scene->width()/2 - back_to_menu_btn->boundingRect().width()/2;
+    y += 75;
+    back_to_menu_btn->setPos(x, y);
+    connect(back_to_menu_btn, SIGNAL(clicked()), this, SLOT(showMainMenu()));
+    scene->addItem(back_to_menu_btn);
+
+    Button *exit_btn = new Button(QString("Konec"));
+    x = scene->width()/2 - exit_btn->boundingRect().width()/2;
+    y += 75;
+    exit_btn->setPos(x, y);
+    connect(exit_btn, SIGNAL(clicked()), this, SLOT(close()));
+    scene->addItem(exit_btn);
 }
 
 void Game::drawPanel(int x, int y, int width, int height, QColor color, double opacity){
