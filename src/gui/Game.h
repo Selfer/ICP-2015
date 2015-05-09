@@ -17,6 +17,7 @@ public:
     Game(QWidget * parent=0);
     void gameUpdate();
     void keyPressEvent(QKeyEvent * event);
+    void keyReleaseEvent(QKeyEvent * event);
     void rotate();
     QGraphicsScene * scene;
     Score * score;
