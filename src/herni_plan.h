@@ -11,12 +11,14 @@ class HerniPlan {
 		Policko mapa[11][11];
 		//Policko **mapa;
 		Policko volne;
-		string predmety[POCET_PREDMETU];
-		string volnePredmety[POCET_PREDMETU];
+        string predmety[POCET_PREDMETU];
+        string volnePredmety[POCET_PREDMETU];
 		string vlozenePolicko;
+        int pocetBodu;
+        int pocetPredmetu;
 	public:
-		void inicializace(int);
-		void inicializace_ulozena(int);
+        void inicializace(int, int, int);
+        void inicializace_ulozena(int, int, int);
 		//nastaveni policka
 		void nastav_policko(int, int, int, int, int);
 		//nastaveni volneho policka

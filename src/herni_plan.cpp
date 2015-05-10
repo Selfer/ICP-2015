@@ -11,8 +11,10 @@
 * Inicializace herniho planu
 * @param vel velikost herniho planu(int)
 */
-void HerniPlan::inicializace(int vel){
-	velikost = vel;
+void HerniPlan::inicializace(int vel,int predmetu, int bodu){
+    pocetBodu = bodu;
+    pocetPredmetu = predmetu;
+    velikost = vel;
 	vlozenePolicko = "F";
 	lPole = 4;
 	tPole = 0;
@@ -70,13 +72,16 @@ void HerniPlan::inicializace(int vel){
 	else if(tPole < lPole && tPole < iPole) volne.druh = 1;
 	else volne.druh = 2;
 	volne.otoceni = rand() % 4;
-	
+    qDebug() << "a";
 	//predmety
-	for(int i = 0; i < 20; i++){
-		predmety[i] = herni_predmety(i);
+    for(int i = 0; i < 24; i++){
+        qDebug() << "b";
+        predmety[i] = herni_predmety(i);
+        qDebug() << "c";
 		volnePredmety[i] = predmety[i];
+        qDebug() << "d";
 	}
-	
+    qDebug() << "x";
 	volne.predmet = -1;
 	for(int i = 0; i < velikost; i++){
 		for(int j = 0; j < velikost; j++){
@@ -86,7 +91,7 @@ void HerniPlan::inicializace(int vel){
 	int radek;
 	int sloupec;
 	//rozmisteni predmetu
-	for(int i = 0; i < POCET_PREDMETU; ){
+    for(int i = 0; i < pocetPredmetu; ){
 		//umisteni jednoho predmetu na volne policko
 		if(i == 17){
 			volne.predmet = i;
@@ -107,8 +112,10 @@ void HerniPlan::inicializace(int vel){
 * Inicializace ulozeneho herniho planu
 * @param vel velikost herniho planu(int)
 */
-void HerniPlan::inicializace_ulozena(int vel){
+void HerniPlan::inicializace_ulozena(int vel,int predmetu, int bodu){
 	velikost = vel;
+    pocetBodu = bodu;
+    pocetPredmetu = predmetu;
 	/*mapa = (Policko**)malloc(velikost * sizeof(Policko*));
 	for(int r = 0; r <= velikost; r++){
 		mapa[r] = (Policko*)malloc(velikost * sizeof(Policko));
@@ -155,7 +162,7 @@ void HerniPlan::nastav_predmet(int i, string predmet, string volnyPredmet){
 void HerniPlan::prirad_predmet(Hrac *hrac){
 	int nahoda;
 	while(1){
-		nahoda = rand() % POCET_PREDMETU;
+        nahoda = rand() % pocetPredmetu;
 		if(volnePredmety[nahoda] != ""){
 			hrac->nastav_predmet(nahoda);
 			volnePredmety[nahoda] = "";
@@ -211,6 +218,14 @@ string HerniPlan::herni_predmety(int cislo){
 			return "\u273F";
 		case 19:
 			return "\u2730";
+        case 20:
+            return "\u2646";
+        case 21:
+            return "\u2648";
+        case 22:
+            return "\u2624";
+        case 23:
+            return "\u2653";
 		default:
 			return "CHYBA";
 	}
@@ -354,7 +369,7 @@ int HerniPlan::pohyb_hrace(string prikaz, int velikost, Hrac *hrac, int cisloHra
 		sprintf(intStr, "%i", mapa[radek][sloupec].predmet);
 		historie->push(string(intStr));
 		mapa[radek][sloupec].predmet = NIC;
-		if(hrac->pocet_bodu() == POCET_BODU){
+        if(hrac->pocet_bodu() == pocetBodu){
 			hrac->nastav_konec();
 		}
 		else prirad_predmet(hrac);
@@ -738,7 +753,7 @@ void HerniPlan::uloz(ofstream *soubor){
 	}
 	*soubor << volne.druh << endl << volne.otoceni << endl << volne.predmet << endl;
 	//ulozeni predmetu
-	for(int i = 0; i < POCET_PREDMETU; i++){
+    for(int i = 0; i < pocetPredmetu; i++){
 		*soubor << predmety[i] << endl << volnePredmety[i] << endl;
 	}
 }

@@ -30,6 +30,10 @@ void Predmet::vykresliPredmet(int cislo){
     else if(cislo == 17)setPixmap(QPixmap(":/images/p17.png"));
     else if(cislo == 18)setPixmap(QPixmap(":/images/p18.png"));
     else if(cislo == 19)setPixmap(QPixmap(":/images/p19.png"));
+    else if(cislo == 20)setPixmap(QPixmap(":/images/p20.png"));
+    else if(cislo == 21)setPixmap(QPixmap(":/images/p21.png"));
+    else if(cislo == 22)setPixmap(QPixmap(":/images/p22.png"));
+    else if(cislo == 23)setPixmap(QPixmap(":/images/p23.png"));
 }
 
 

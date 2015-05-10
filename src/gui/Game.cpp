@@ -425,7 +425,9 @@ void Game::startGame(int size, int players){
     //vylosovani zacinajiciho hrace
     hracNaTahu = rand() % pocetHracu;
     posunuto = false;
-    plan.inicializace(velikost);
+    int pocetPredmetu = POCET_PREDMETU;
+    if(velikost == 5) pocetPredmetu = 12;
+    plan.inicializace(velikost,pocetPredmetu,pocetPredmetu/pocetHracu);
     hrac = new Hrac[pocetHracu];
     for(int i = 0; i < pocetHracu; i++){
         hrac[i] = Hrac(i, velikost);
