@@ -26,11 +26,11 @@
         <file>images/p17.png</file>
         <file>images/p18.png</file>
         <file>images/p19.png</file>
-        <file>images/pozadi.jpg</file>
         <file>images/tcesta.jpg</file>
         <file>images/p20.png</file>
         <file>images/p21.png</file>
         <file>images/p22.png</file>
         <file>images/p23.png</file>
+        <file>images/pozadi.jpg</file>
     </qresource>
 </RCC>

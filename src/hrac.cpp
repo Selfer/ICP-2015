@@ -1,5 +1,5 @@
 /**
-*\author xkondr01 xkucha20
+* @author xkondr01 xkucha20
 * @file hrac.cpp
 * @brief Definice hrace a funkci s nim spojenych
 */
@@ -8,11 +8,7 @@
 
 Hrac::Hrac(){}
 
-/**
-* Inicializace hrace
-* @param cisloHrace cislo inicializovaneho hrace(int)
-* @param velikost velikost herniho planu(int)
-*/
+//Inicializace hrace
 Hrac::Hrac(int cisloHrace, int velikost){
 	switch(cisloHrace){
 		case 0:
@@ -36,73 +32,43 @@ Hrac::Hrac(int cisloHrace, int velikost){
 	}
 	body = 0;
 }
-/**
-* Inicializace ulozeneho hrace
-* @param pozicex x-ova pozice hrace(int)
-* @param pozicey y-ova pozice hrace(int)
-* @param spredmet cislo hracem hledaneho predmetu(int)
-* @param sbody body hrace(int)
-*/
+//Inicializace ulozeneho hrace
 Hrac::Hrac(int pozicex, int pozicey, int spredmet, int sbody){
 	x = pozicex;
 	y = pozicey;
 	predmet = spredmet;
 	body = sbody;
 }
-/**
-* Navraceni poctu bodu hrace
-* @return pocet bodu hrace(int)
-*/
+//Navraceni poctu bodu hrace
 int Hrac::pocet_bodu(){
 	return body;
 }
-/**
-* Navraceni cisla hledaneho predmetu
-* @return cislo hledaneho predmetu(int)
-*/
+//Navraceni cisla hledaneho predmetu
 int Hrac::hledany_predmet(){
 	return predmet;
 }
-/**
-* Nastaveni predmetu hraci
-* @param cislo cislo hracem hledaneho predmetu(int)
-*/
+//Nastaveni predmetu hraci
 void Hrac::nastav_predmet(int cislo){
 	predmet = cislo;
 }
-/**
-* Nastaveni predmetu na hodnotu znacici, ze hrac muze jit do cile a koncit
-*/
+//Nastaveni predmetu na hodnotu znacici, ze hrac muze jit do cile a koncit
 void Hrac::nastav_konec(){
 	predmet = KONEC;
 }
-/**
-* Pridani bodu hraci
-*/
+//Pridani bodu hraci
 void Hrac::pridej_bod(){
 	body++;
 }
-/**
-* Odebrani bodu hraci pri kroku zpet
-*/
+//Odebrani bodu hraci pri kroku zpet
 void Hrac::uber_bod(){
 	body--;
 }
-/**
-* Vraceni pozice hrace
-* @param radek radek, kde se hrac nachazi(int *)
-* @param sloupec sloupec, kde se hrac nachazi(int *)
-*/
+//Vraceni pozice hrace
 void Hrac::vrat_pozici(int *radek, int *sloupec){
 	*radek = x;
 	*sloupec = y;
 }
-/**
-* Pohyb hrace
-* @param prikaz smer posunu hrace(char)
-* @param velikost velikost herniho planu(int)
-* @param presah hodnota indikujici presunuti hrace na druhou stranu herniho planu(bool)
-*/
+//Pohyb hrace
 void Hrac::pohyb(char prikaz, int velikost, bool presah){
 	if(prikaz == 'd'){
 		if(presah == true && x == velikost-1) x = 0;
@@ -121,20 +87,12 @@ void Hrac::pohyb(char prikaz, int velikost, bool presah){
         else y--;
 	}
 }
-/**
-* Zjisteni pritomnosti osoby na policku
-* @param r radek herniho planu(int)
-* @param s sloupec herniho planu (int)
-* @return hodnota reprezentujici, zda je nebo neni na policku postava(bool)
-*/
+//Zjisteni pritomnosti osoby na policku
 bool Hrac::je_postava(int r, int s){
 	if(x == r && y == s) return true;
 	else return false;
 }
-/**
-* Ulozeni hrace do souboru
-* @param soubor soubor, kam se herni plan ulozi(ofstream *)
-*/
+// Ulozeni hrace do souboru
 void Hrac::uloz(ofstream *soubor){
 	*soubor << x << endl << y << endl << predmet << endl << body << endl;
 }

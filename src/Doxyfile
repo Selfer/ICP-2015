@@ -1,0 +1,17 @@
+/**
+ * Authors: Martin Kondr (xkondr01)
+ *          Ondrej Kuchar (xkucha20)
+ */
+
+PROJECT_NAME = "ICP projekt 2015 (xkondr01, xkucha20)"
+INPUT = src src/gui
+
+
+GENERATE_HTML = YES
+GENERATE_LATEX = NO
+
+# include source code into output
+SOURCE_BROWSER = YES
+
+# directory name for html output
+HTML_OUTPUT = doc/

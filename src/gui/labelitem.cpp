@@ -1,3 +1,8 @@
+/**
+* @author xkondr01 xkucha20
+* @file labelitem.cpp
+* @brief Vypisovani textu na souradnice
+*/
 #include "labelitem.h"
 #include <QFont>
 

@@ -1,3 +1,8 @@
+/**
+* @author xkondr01 xkucha20
+* @file Game.cpp
+* @brief Spusteni hry, jeji nastaveni a nastaveni menu
+*/
 #include "Game.h"
 #include "button.h"
 #include "labelitem.h"
@@ -38,12 +43,11 @@ void Game::keyPressEvent(QKeyEvent *event){
     else if (key == Qt::Key_Down){
         movePlayer("d");
     }
-    else if (key == Qt::Key_Enter || key == Qt::Key_Return) {
+    else if (hrac_posunul == true && (key == Qt::Key_Enter || key == Qt::Key_Return)) {
         hracNaTahu++;
         if(hracNaTahu == pocetHracu) {
             hracNaTahu = 0;
         }
-        qDebug() << "Dalsi hrac: " << hracNaTahu << hrac[hracNaTahu].hledany_predmet();
         hrac_posunul = false;
         posunuto = false;
         updateGame();
@@ -53,7 +57,6 @@ void Game::keyPressEvent(QKeyEvent *event){
         predmet->vykresliPredmet(hrac[hracNaTahu].hledany_predmet());
         predmet->setPos(125+(velikost*52),170);
         scene->addItem(predmet);
-        qDebug() << "Dalsi hrac: " << hracNaTahu << hrac[hracNaTahu].hledany_predmet();
     }
     else if (key == Qt::Key_Escape) {
         if(running && !menu) showInGameMenu();
@@ -109,7 +112,6 @@ void Game::movePlayer(const char *dir){
             else if(hracNaTahu == 2) posuny = 80;
             else if(hracNaTahu == 3) posunx = 80;
             hrac_gui[hracNaTahu]->setPos(posuny+y*52,posunx+x*52);
-            qDebug() << "Jdu na pozici " << x << ", " << y;
             if(old_item != hrac[hracNaTahu].hledany_predmet()) {
                 can_move = false;
                 updateGame();
@@ -472,6 +474,7 @@ void Game::startGame(int size, int players){
     int pocetPredmetu = POCET_PREDMETU;
     if(velikost == 5) pocetPredmetu = 12;
     plan.inicializace(velikost,pocetPredmetu,pocetPredmetu/pocetHracu);
+    plan.je_gui();
     hrac = new Hrac[pocetHracu];
     for(int i = 0; i < pocetHracu; i++){
         hrac[i] = Hrac(i, velikost);

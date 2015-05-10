@@ -1,3 +1,8 @@
+/**
+* @author xkondr01 xkucha20
+* @file predmet.cpp
+* @brief Nastaveni graficke podoby predmetu
+*/
 #include "predmet.h"
 #include <QGraphicsScene>
 #include "Game.h"

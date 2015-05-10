@@ -18,7 +18,9 @@
 
 using namespace std;
 
-//struktura pro kazde policko
+/**
+ *struktura pro kazde policko
+ */
 typedef struct {
 int druh;
 int otoceni;

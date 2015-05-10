@@ -1,3 +1,7 @@
+/**
+* @author xkondr01 xkucha20
+* @file main.cpp
+*/
 #include <QApplication>
 #include "Game.h"
 

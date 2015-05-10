@@ -101,7 +101,7 @@ int main(int argc, char *argv[]) {
             cout << "Na tahu je hrac cislo: " << hracNaTahu+1 << endl;
             plan.vypis(hrac, pocetHracu);
             if(hrac[hracNaTahu].hledany_predmet() == -2) cout << "Vrat se na zacatek" << endl;
-            else cout << "Hledas: " << plan.herni_predmety(hrac[hracNaTahu].hledany_predmet()) << endl;
+            else cout << "Hledas: " << plan.herni_predmety(hrac[hracNaTahu].hledany_predmet()) << "\u25FC" << endl;
             continue;
         }
         else if(prikaz == "nacti"){

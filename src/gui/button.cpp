@@ -1,3 +1,8 @@
+/**
+* @author xkondr01 xkucha20
+* @file button.cpp
+* @brief Nastaveni tlacitek
+*/
 #include "button.h"
 #include <QGraphicsTextItem>
 #include <QBrush>

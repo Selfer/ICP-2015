@@ -1,3 +1,8 @@
+/**
+* @author xkondr01 xkucha20
+* @file Player.cpp
+* @brief Nastaveni graficke podoby hrace
+*/
 #include "Player.h"
 #include <QGraphicsScene>
 #include "Game.h"

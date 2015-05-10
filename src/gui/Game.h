@@ -8,7 +8,6 @@
 #include <QImage>
 #include <QList>
 #include <QKeyEvent>
-#include <QDebug>
 #include <QGraphicsView>
 #include <QWidget>
 #include <QGraphicsScene>

@@ -1,3 +1,9 @@
+/**
+* @author xkondr01 xkucha20
+* @file Score.cpp
+* @brief Vypisovani textu informujici o skore hry
+*/
+
 #include "Score.h"
 #include <QFont>
 

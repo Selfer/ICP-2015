@@ -1,3 +1,8 @@
+/**
+* @author xkondr01 xkucha20
+* @file chodba.cpp
+* @brief Nastaveni graficke podoby chodby
+*/
 #include "chodba.h"
 #include <QGraphicsScene>
 #include "Game.h"
