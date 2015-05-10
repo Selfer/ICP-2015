@@ -5,7 +5,7 @@
 */
 #include "herni_plan.h"
 #include "time.h"
-#include <QDebug>
+//#include <QDebug>
 
 /**
 * Inicializace herniho planu
@@ -72,16 +72,11 @@ void HerniPlan::inicializace(int vel,int predmetu, int bodu){
 	else if(tPole < lPole && tPole < iPole) volne.druh = 1;
 	else volne.druh = 2;
 	volne.otoceni = rand() % 4;
-    qDebug() << "a";
 	//predmety
     for(int i = 0; i < 24; i++){
-        qDebug() << "b";
         predmety[i] = herni_predmety(i);
-        qDebug() << "c";
 		volnePredmety[i] = predmety[i];
-        qDebug() << "d";
 	}
-    qDebug() << "x";
 	volne.predmet = -1;
 	for(int i = 0; i < velikost; i++){
 		for(int j = 0; j < velikost; j++){
@@ -745,7 +740,7 @@ void HerniPlan::vrat_predmet_zpet(int x, int y, string predmet, Hrac *hrac){
 * @param soubor soubor, kam se herni plan ulozi(ofstream *)
 */
 void HerniPlan::uloz(ofstream *soubor){
-	*soubor << velikost << endl << vlozenePolicko << endl;
+	*soubor << velikost << endl << pocetPredmetu << endl << pocetBodu << endl << vlozenePolicko << endl;
 	for(int i = 0; i < velikost; i++){
 		for(int j = 0; j < velikost; j++){
 			*soubor << mapa[i][j].druh << endl << mapa[i][j].otoceni << endl << mapa[i][j].predmet << endl;
