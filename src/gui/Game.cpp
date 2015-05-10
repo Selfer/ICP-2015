@@ -77,8 +77,7 @@ void Game::rotate() {
     volna_chodba->vykresliChodbu(druh,otoceni);
 }
 
-void Game::insertStone(const char *index)
-{
+void Game::insertStone(const char *index){
     if(!posunuto) {
         posunuto = plan.posun(index, hrac, pocetHracu);
         string vPolicko = plan.vlozene_policko();
@@ -99,18 +98,24 @@ void Game::movePlayer(const char *dir){
     if (hrac_posunul) {
         int x;
         int y;
-        plan.pohyb_hrace(dir,velikost,&hrac[hracNaTahu],hracNaTahu,&historie);
-        hrac[hracNaTahu].vrat_pozici(&x, &y);
-        int posunx = 70;
-        int posuny = 70;
-        if(hracNaTahu == 1) {
-            posunx = 80;
-            posuny = 80;
+        int old_item = hrac[hracNaTahu].hledany_predmet();
+        int pohyb = plan.pohyb_hrace(dir,velikost,&hrac[hracNaTahu],hracNaTahu,&historie);
+        if(pohyb < 0) {
+            hrac[hracNaTahu].vrat_pozici(&x, &y);
+            int posunx = 70;
+            int posuny = 70;
+            if(hracNaTahu == 1) {
+                posunx = 80;
+                posuny = 80;
+            }
+            else if(hracNaTahu == 2) posuny = 80;
+            else if(hracNaTahu == 3) posunx = 80;
+            hrac_gui[hracNaTahu]->setPos(posuny+y*52,posunx+x*52);
+            qDebug() << "Jdu na pozici " << x << ", " << y;
+            if(old_item != hrac[hracNaTahu].hledany_predmet()) {
+                updateGame();
+            }
         }
-        else if(hracNaTahu == 2) posuny = 80;
-        else if(hracNaTahu == 3) posunx = 80;
-        hrac_gui[hracNaTahu]->setPos(posuny+y*52,posunx+x*52);
-        qDebug() << "Jdu na pozici " << x << ", " << y;
     }
 }
 

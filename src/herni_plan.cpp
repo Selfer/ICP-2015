@@ -295,7 +295,7 @@ int HerniPlan::pohyb_hrace(string prikaz, int velikost, Hrac *hrac, int cisloHra
 			(mapa[radek][sloupec].druh == 0 && mapa[radek][sloupec].otoceni == 2) ||
 			(mapa[radek][sloupec].druh == 1 && mapa[radek][sloupec].otoceni == 0) ||
 			(mapa[radek][sloupec].druh == 2 && mapa[radek][sloupec].otoceni == 1) ||
-			(mapa[radek][sloupec].druh == 2 && mapa[radek][sloupec].otoceni == 3)) return 1; 
+            (mapa[radek][sloupec].druh == 2 && mapa[radek][sloupec].otoceni == 3)) return 0;
 		//kontrola, zda se muze hrac posunout na nove policko
 		if((mapa[radek-1][sloupec].druh == 0 && mapa[radek-1][sloupec].otoceni == 0) ||
 			(mapa[radek-1][sloupec].druh == 0 && mapa[radek-1][sloupec].otoceni == 3) ||
@@ -371,7 +371,7 @@ int HerniPlan::pohyb_hrace(string prikaz, int velikost, Hrac *hrac, int cisloHra
 		
 	}
 
-	return 0;
+    return -1;
 }
 /**
 * Vykresleni jednoho policka

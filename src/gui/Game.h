@@ -44,6 +44,7 @@ private:
     bool menu;
     bool posunuto;
     bool hrac_posunul;
+    bool can_move;
     stack<string> historie;
     QComboBox *size_cbox;
     QComboBox *players_cbox;
