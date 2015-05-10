@@ -59,6 +59,7 @@ private:
     void createLeftLabels();
     void createRightLabels();
     void createLabels();
+    void showGameOverMenu(int player_id);
 public slots:
     void startGame(int size = 7, int players = 2);
     void updateGame();

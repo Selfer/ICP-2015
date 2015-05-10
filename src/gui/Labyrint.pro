@@ -18,7 +18,6 @@ SOURCES += main.cpp \
     Score.cpp \
     Player.cpp \
     Game.cpp \
-    labyrint.cpp \
     predmet.cpp \
     chodba.cpp \
     ../herni_plan.cpp \
@@ -30,7 +29,6 @@ HEADERS  += \
     Score.h \
     Player.h \
     Game.h \
-    labyrint.h \
     predmet.h \
     chodba.h \
     ../herni_plan.h \

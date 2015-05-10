@@ -3,9 +3,6 @@
 #include "labelitem.h"
 
 Game::Game(QWidget *parent){
-    running = false;
-    hrac_posunul = false;
-    menu = false;
     scene = new QGraphicsScene();
     scene->setSceneRect(0,0,1024,768);
     setBackgroundBrush(QBrush(QImage(":/images/pozadi.jpg")));
@@ -86,6 +83,7 @@ void Game::insertStone(const char *index){
         }
         else {
             hrac_posunul = true;
+            can_move = true;
             scene->clear();
             updateGame();
             historie.push(index);
@@ -95,7 +93,7 @@ void Game::insertStone(const char *index){
 }
 
 void Game::movePlayer(const char *dir){
-    if (hrac_posunul) {
+    if (hrac_posunul && can_move) {
         int x;
         int y;
         int old_item = hrac[hracNaTahu].hledany_predmet();
@@ -113,14 +111,23 @@ void Game::movePlayer(const char *dir){
             hrac_gui[hracNaTahu]->setPos(posuny+y*52,posunx+x*52);
             qDebug() << "Jdu na pozici " << x << ", " << y;
             if(old_item != hrac[hracNaTahu].hledany_predmet()) {
+                can_move = false;
                 updateGame();
             }
+        }
+        else if(pohyb > 0) { // konec hry
+            showGameOverMenu(pohyb);
         }
     }
 }
 
 void Game::showMainMenu(){
     scene->clear();
+    pocetHracu = 0;
+    velikost = 0;
+    running = false;
+    hrac_posunul = false;
+    menu = false;
     Button *play_btn = new Button(QString("Nova hra"));
     int x = scene->width()/2 - play_btn->boundingRect().width()/2;
     int y = 250;
@@ -201,6 +208,41 @@ void Game::showInGameMenu(){
     save_game_btn->setPos(x, y);
     //connect(save_game_btn, SIGNAL(clicked()), this, SLOT(showMainMenu()));
     scene->addItem(save_game_btn);
+
+    Button *back_to_menu_btn = new Button(QString("Vratit do menu"));
+    x = scene->width()/2 - back_to_menu_btn->boundingRect().width()/2;
+    y += 75;
+    back_to_menu_btn->setPos(x, y);
+    connect(back_to_menu_btn, SIGNAL(clicked()), this, SLOT(showMainMenu()));
+    scene->addItem(back_to_menu_btn);
+
+    Button *exit_btn = new Button(QString("Konec"));
+    x = scene->width()/2 - exit_btn->boundingRect().width()/2;
+    y += 75;
+    exit_btn->setPos(x, y);
+    connect(exit_btn, SIGNAL(clicked()), this, SLOT(close()));
+    scene->addItem(exit_btn);
+}
+
+void Game::showGameOverMenu(int player_id) {
+    int n = scene->items().size();
+    for(int i = 0; i < n; i++) {
+        scene->items()[i]->setEnabled(false);
+    }
+    drawPanel(0, 0, 1024, 768, QColor(Qt::gray), 0.65);
+    drawPanel(1024/2 - 200,200,400,400,QColor(Qt::cyan), 0.85);
+    QGraphicsTextItem *lbl_go_text = new LabelItem("Konec hry", 0, 0);
+    lbl_go_text->setPos(scene->width()/2 - lbl_go_text->boundingRect().width()/2, 250);
+    scene->addItem(lbl_go_text);
+    QGraphicsTextItem *lbl_player_won = new LabelItem(QString("Vyhral hrac c. %1").arg(player_id), 0, 0);
+    lbl_player_won->setPos(scene->width()/2 - lbl_player_won->boundingRect().width()/2, 275);
+    scene->addItem(lbl_player_won);
+    Button *restart_btn = new Button(QString("Hrat znovu"));
+    int x = scene->width()/2 - restart_btn->boundingRect().width()/2;
+    int y = 325;
+    restart_btn->setPos(x, y);
+    connect(restart_btn, SIGNAL(clicked()), this, SLOT(startGame()));
+    scene->addItem(restart_btn);
 
     Button *back_to_menu_btn = new Button(QString("Vratit do menu"));
     x = scene->width()/2 - back_to_menu_btn->boundingRect().width()/2;
@@ -403,8 +445,10 @@ void Game::updateGame(){
 }
 
 void Game::startGame(int size, int players){
-    pocetHracu = players_cbox->currentText().toInt();
-    velikost = size_cbox->currentText().toInt();
+    if(pocetHracu == 0 && velikost == 0) {
+        pocetHracu = players_cbox->currentText().toInt();
+        velikost = size_cbox->currentText().toInt();
+    }
     switch(velikost) {
         case 5:
             labels_num = 2;
