@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "button.h"
+#include "labelitem.h"
 
 Game::Game(QWidget *parent){
     running = false;
@@ -223,67 +224,92 @@ void Game::drawPanel(int x, int y, int width, int height, QColor color, double o
 
 void Game::createTopLabels() {
     if(labels_num >= 2) {
-        QGraphicsTextItem *lbl_a = new QGraphicsTextItem("A");
-        lbl_a->setPos(130, 35);
+        QGraphicsTextItem *lbl_a = new LabelItem("A", 125, 25);
         scene->addItem(lbl_a);
-        QGraphicsTextItem *lbl_b = new QGraphicsTextItem("B");
-        lbl_b->setPos(235, 35);
+        QGraphicsTextItem *lbl_b = new LabelItem("B", 230, 25);
         scene->addItem(lbl_b);
     }
     if(labels_num >= 3) {
-        QGraphicsTextItem *lbl_c = new QGraphicsTextItem("C");
-        lbl_c->setPos(340, 35);
+        QGraphicsTextItem *lbl_c = new LabelItem("C", 335, 25);
         scene->addItem(lbl_c);
     }
     if(labels_num >= 4) {
-        QGraphicsTextItem *lbl_d = new QGraphicsTextItem("D");
-        lbl_d->setPos(445, 35);
+        QGraphicsTextItem *lbl_d = new LabelItem("D", 440, 25);
         scene->addItem(lbl_d);
     }
     if(labels_num >= 5) {
-        QGraphicsTextItem *lbl_e = new QGraphicsTextItem("E");
-        lbl_e->setPos(550, 35);
+        QGraphicsTextItem *lbl_e = new LabelItem("E", 545, 25);
         scene->addItem(lbl_e);
     }
 }
 
-void Game::createBottomLabels() {
-
-}
-
-void Game::createLeftLabels() {
-
-}
-
 void Game::createRightLabels() {
     if(labels_num >= 2) {
-        QGraphicsTextItem *lbl_i = new QGraphicsTextItem("I");
-        lbl_i->setPos(70+velikost*52, 130);
+        QGraphicsTextItem *lbl_i = new LabelItem("I", 75+velikost*52, 120);
         scene->addItem(lbl_i);
-        QGraphicsTextItem *lbl_j = new QGraphicsTextItem("J");
-        lbl_j->setPos(70+velikost*52, 230);
+        QGraphicsTextItem *lbl_j = new LabelItem("J", 75+velikost*52, 220);
         scene->addItem(lbl_j);
     }
     if(labels_num >= 3) {
-        QGraphicsTextItem *lbl_k = new QGraphicsTextItem("K");
-        lbl_k->setPos(70+velikost*52, 335);
+        QGraphicsTextItem *lbl_k = new LabelItem("K", 75+velikost*52, 325);
         scene->addItem(lbl_k);
     }
     if(labels_num >= 4) {
-        QGraphicsTextItem *lbl_l = new QGraphicsTextItem("L");
-        lbl_l->setPos(70+velikost*52, 440);
+        QGraphicsTextItem *lbl_l = new LabelItem("L", 75+velikost*52, 430);
         scene->addItem(lbl_l);
     }
     if(labels_num >= 5) {
-        QGraphicsTextItem *lbl_m = new QGraphicsTextItem("M");
-        lbl_m->setPos(70+velikost*52, 545);
+        QGraphicsTextItem *lbl_m = new LabelItem("M", 75+velikost*52, 535);
         scene->addItem(lbl_m);
+    }
+}
+
+void Game::createBottomLabels() {
+    if(labels_num >= 2) {
+        QGraphicsTextItem *lbl_s = new LabelItem("S", 125, 70+velikost*52);
+        scene->addItem(lbl_s);
+        QGraphicsTextItem *lbl_r = new LabelItem("R", 225, 70+velikost*52);
+        scene->addItem(lbl_r);
+    }
+    if(labels_num >= 3) {
+        QGraphicsTextItem *lbl_q = new LabelItem("Q", 330, 70+velikost*52);
+        scene->addItem(lbl_q);
+    }
+    if(labels_num >= 4) {
+        QGraphicsTextItem *lbl_p = new LabelItem("P", 435, 70+velikost*52);
+        scene->addItem(lbl_p);
+    }
+    if(labels_num >= 5) {
+        QGraphicsTextItem *lbl_o = new LabelItem("O", 540, 70+velikost*52);
+        scene->addItem(lbl_o);
+    }
+}
+
+void Game::createLeftLabels() {
+    if(labels_num >= 2) {
+        QGraphicsTextItem *lbl_y = new LabelItem("Y", 25, 125);
+        scene->addItem(lbl_y);
+        QGraphicsTextItem *lbl_x = new LabelItem("X", 25, 230);
+        scene->addItem(lbl_x);
+    }
+    if(labels_num >= 3) {
+        QGraphicsTextItem *lbl_w = new LabelItem("W", 25, 335);
+        scene->addItem(lbl_w);
+    }
+    if(labels_num >= 4) {
+        QGraphicsTextItem *lbl_v = new LabelItem("V", 25, 440);
+        scene->addItem(lbl_v);
+    }
+    if(labels_num >= 5) {
+        QGraphicsTextItem *lbl_u = new LabelItem("U", 25, 545);
+        scene->addItem(lbl_u);
     }
 }
 
 void Game::createLabels() {
     createTopLabels();
     createRightLabels();
+    createBottomLabels();
     createLeftLabels();
 }
 

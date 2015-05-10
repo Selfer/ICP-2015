@@ -23,7 +23,8 @@ SOURCES += main.cpp \
     chodba.cpp \
     ../herni_plan.cpp \
     ../hrac.cpp \
-    button.cpp
+    button.cpp \
+    labelitem.cpp
 
 HEADERS  += \
     Score.h \
@@ -34,7 +35,8 @@ HEADERS  += \
     chodba.h \
     ../herni_plan.h \
     ../hrac.h \
-    button.h
+    button.h \
+    labelitem.h
 
 RESOURCES += \
     res.qrc
