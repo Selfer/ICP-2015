@@ -47,17 +47,59 @@ private:
     stack<string> historie;
     QComboBox *size_cbox;
     QComboBox *players_cbox;
+    /**
+    * Rotace volne chodby
+    */
     void rotate();
+    /**
+    * Pohyb hrace
+    * @param dir smer pohybu hrace(char *)
+    */
     void movePlayer(const char *dir);
+    /**
+    * Vykresleni herniho menu
+    */
     void showInGameMenu();
+    /**
+    * Vykresleni panelu
+    * @param x x-pozice(int)
+    * @param y y-pozice(int)
+    * @param width sirka panelu(int)
+    * @param height vyska panelu(int)
+    * @param color barva panelu(QColor)
+    * @param opacity pruhlednost panelu(double)
+    */
     void drawPanel(int x, int y, int width, int height, QColor color, double opacity);
+    /**
+    * Vsunuti chodby
+    * @param index misto, kde bylo zasunuto(char *)
+    */
     void insertStone(const char *index);
     bool isEvenBorder(int x, int y);
+    /**
+    * Vypise horni popisky
+    */
     void createTopLabels();
+    /**
+    * Vypise dolni popisky
+    */
     void createBottomLabels();
+    /**
+    * Vypise levou stranu popisku
+    */
     void createLeftLabels();
+    /**
+    * Vypise pravou stranu popisku
+    */
     void createRightLabels();
+    /**
+    * Vypise popisky k hernimu planu
+    */
     void createLabels();
+    /**
+    * Vykresli menu po konci hry
+    * @param player_id cislo viteze(int)
+    */
     void showGameOverMenu(int player_id);
 public slots:
     void startGame(int size = 7, int players = 2);

@@ -194,8 +194,8 @@ void Game::showInGameMenu(){
     for(int i = 0; i < n; i++) {
         scene->items()[i]->setEnabled(false);
     }
-    drawPanel(0, 0, 1024, 768, QColor(Qt::gray), 0.65);
-    drawPanel(1024/2 - 200,200,400,400,QColor(Qt::cyan), 0.85);
+    drawPanel(0, 0, 1024, 768, QColor(Qt::lightGray), 0.65);
+    drawPanel(1024/2 - 200,200,400,400,QColor(Qt::darkGray), 0.85);
 
     Button *resume_btn = new Button(QString("Vratit do hry"));
     int x = scene->width()/2 - resume_btn->boundingRect().width()/2;
@@ -231,8 +231,8 @@ void Game::showGameOverMenu(int player_id) {
     for(int i = 0; i < n; i++) {
         scene->items()[i]->setEnabled(false);
     }
-    drawPanel(0, 0, 1024, 768, QColor(Qt::gray), 0.65);
-    drawPanel(1024/2 - 200,200,400,400,QColor(Qt::cyan), 0.85);
+    drawPanel(0, 0, 1024, 768, QColor(Qt::lightGray), 0.65);
+    drawPanel(1024/2 - 200,200,400,400,QColor(Qt::darkGray), 0.85);
     QGraphicsTextItem *lbl_go_text = new LabelItem("Konec hry", 0, 0);
     lbl_go_text->setPos(scene->width()/2 - lbl_go_text->boundingRect().width()/2, 250);
     scene->addItem(lbl_go_text);

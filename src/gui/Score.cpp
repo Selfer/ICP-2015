@@ -20,6 +20,3 @@ void Score::vypis(int hrac, int skore){
     setFont(QFont("times",16));
 }
 
-int Score::getScore(){
-    return score;
-}

@@ -32,5 +32,8 @@
         <file>images/p22.png</file>
         <file>images/p23.png</file>
         <file>images/pozadi.jpg</file>
+        <file>images/cestai.jpg</file>
+        <file>images/cestal.jpg</file>
+        <file>images/cestat.jpg</file>
     </qresource>
 </RCC>

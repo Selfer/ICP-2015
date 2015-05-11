@@ -6,8 +6,12 @@
 class Score: public QGraphicsTextItem{
 public:
     Score(QGraphicsItem * parent=0);
+    /**
+    * Vypise pocet bodu hrace
+    * @param hrac cislo hrace(int)
+    * @param skore pocet bodu hrace (int)
+    */
     void vypis(int,int);
-    int getScore();
 private:
     int score;
 };

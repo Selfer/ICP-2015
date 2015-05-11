@@ -43,32 +43,42 @@ int main(int argc, char *argv[]) {
             napoveda();
             return 0;
         }
+        else 
+			cout << "Spatne parametry" << endl;
+			return 0;
     }
-    else if(argc == 4){
-        velikost = atoi(argv[1]);
-        pocetHracu = atoi(argv[2]);
-        pocetPredmetu = atoi(argv[3]);
-        if(velikost != 5 && velikost != 7 && velikost != 9 && velikost != 11){
-            cout << "Herni plan muze mit velikost jen 5,7,9 nebo 11 policek" << endl;
-            return 0;
-        }
-        if(pocetHracu < 2 || pocetHracu > 4){
+    while(1){
+		cout << "Pocet hracu: "; 
+		cin >> pocetHracu;
+		if(pocetHracu < 2 || pocetHracu > 4){
             cout << "Hru muzou hrat jen 2,3 nebo 4 hraci" << endl;
-            return 0;
+            continue;
         }
-        if(pocetPredmetu == 24 && velikost == 5){
-            cout << "Predmety se nevlezou na herni pole" << endl;
-            return 0;
+        break;
+	}
+	while(1){
+		cout << "Velikost herniho planu: "; 
+		cin >> velikost;
+		if(velikost != 5 && velikost != 7 && velikost != 9 && velikost != 11){
+            cout << "Herni plan muze mit velikost jen 5,7,9 nebo 11 policek" << endl;
+            continue;
         }
-        if(pocetPredmetu != 12 && pocetPredmetu != 24){
+        break;
+	}
+	
+	while(1){
+		if(velikost == 5){
+			pocetPredmetu = 12;
+			break;
+		}
+		cout << "Pocet predmetu: "; 
+		cin >> pocetPredmetu;
+		if(pocetPredmetu != 12 && pocetPredmetu != 24){
             cout << "Pocet predmetu muze byt jen 12 nebo 24" << endl;
-            return 0;
+            continue;
         }
-    }
-    else {
-        napoveda();
-        return 0;
-    }
+        break;
+	}
     int pocetBodu = pocetPredmetu/pocetHracu;
     //vylosovani zacinajiciho hrace
     int hracNaTahu = rand() % pocetHracu;
@@ -111,6 +121,12 @@ int main(int argc, char *argv[]) {
             ifstream soubor;
             const char* ulHra = ulozenaHra.c_str();
             soubor.open(ulHra, ios::in);
+            if(!soubor){
+				cout << "Na tahu je hrac cislo: " << hracNaTahu+1 << endl;
+				plan.vypis(hrac, pocetHracu);
+				cout << "Soubor neexistuje" << endl;
+				continue;
+			}
             soubor >> pocetHracu >> hracNaTahu;
             //nastaveni hracu
             for(int i = 0; i < pocetHracu; i++){

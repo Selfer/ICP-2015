@@ -10,6 +10,10 @@ class Predmet: public QObject,public QGraphicsPixmapItem{
     Q_OBJECT
 public:
     Predmet(QGraphicsItem * parent=0);
+    /**
+    * Vykresli predmet
+    * @param cislo cislo predmetu(int)
+    */
     void vykresliPredmet(int cislo);
 };
 
